@@ -1,70 +1,153 @@
-# GitHub Codespaces ♥️ React
+# ⚡ Electric Consumption Analyzer
 
-Welcome to your shiny new Codespace running React! We've got everything fired up and running for you to explore React.
+A comprehensive React application for analyzing electric consumption data and designing optimal photovoltaic (PV) systems for engineers and energy consultants.
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+![React](https://img.shields.io/badge/React-18.2.0-blue)
+![Vite](https://img.shields.io/badge/Vite-6.3.6-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+## 🚀 Features
 
-This project was bootstrapped for you with [Vite](https://vitejs.dev/).
+### �� **Comprehensive Energy Analysis**
+- Interactive dashboards with real-time statistics
+- Hourly consumption pattern analysis
+- Daily and monthly consumption tracking
+- Peak and off-peak consumption identification
+- Load factor calculations
+- Consumption variability analysis
 
-## Available Scripts
+### 📁 **Easy Data Import**
+- Drag-and-drop Excel file upload (.xlsx, .xls, .csv)
+- Automatic data validation and processing
+- Support for standard energy data format: `energie (kwh) | ora | zi | luna`
+- Real-time data preview and validation
 
-In the project directory, you can run:
+### ☀️ **PV System Design**
+- Automated photovoltaic system sizing
+- Battery storage calculations
+- Inverter sizing recommendations
+- Three sizing options: Conservative, Optimal, Aggressive
+- Technical specifications generation
 
-### `npm start`
+### 💰 **Financial Analysis**
+- Complete cost breakdown (panels, battery, inverter, installation)
+- ROI calculations and payback period analysis
+- Annual savings estimations
+- 25-year financial projections
+- System comparison charts
 
-We've already run this for you in the `Codespaces: server` terminal window below. If you need to stop the server for any reason you can just run `npm start` again to bring it back online.
+### 🎨 **Modern Interface**
+- Responsive design for all devices
+- Interactive charts and visualizations
+- Professional engineering-focused UI
+- Real-time data processing and analysis
 
-Runs the app in the development mode.\
-Open [http://localhost:3000/](http://localhost:3000/) in the built-in Simple Browser (`Cmd/Ctrl + Shift + P > Simple Browser: Show`) to view your running application.
+## 🛠️ Technology Stack
 
-The page will reload automatically when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: React 18.2.0, JavaScript (ES6+)
+- **Build Tool**: Vite 6.3.6
+- **Charts**: Recharts, Chart.js, React-ChartJS-2
+- **File Processing**: SheetJS (xlsx)
+- **Styling**: CSS3 with modern layouts
+- **Testing**: Vitest, React Testing Library
 
-### `npm test`
+## 📦 Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/cosmin-vestemean/energy-consumption-analyzer.git
+   cd energy-consumption-analyzer
+   ```
 
-### `npm run build`
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. **Open in browser**
+   Navigate to `http://localhost:3000` (or the port shown in terminal)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📋 Usage
 
-## Learn More
+1. **Upload Data**: Drag and drop your Excel file with energy consumption data
+2. **Analyze**: Review the comprehensive analysis dashboard
+3. **Design**: Get PV system recommendations with technical specifications
+4. **Export**: Use the analysis for client presentations and system design
 
-You can learn more in the [Vite documentation](https://vitejs.dev/guide/).
+### Expected Data Format
+```
+energie (kwh) | ora | zi  | luna
+1.6          | 0   | 1   | 6
+1.79875      | 1   | 1   | 6
+2.16195      | 9   | 1   | 6
+...
+```
 
-To learn Vitest, a Vite-native testing framework, go to [Vitest documentation](https://vitest.dev/guide/)
+- **energie (kwh)**: Energy consumption in kilowatt-hours
+- **ora**: Hour of day (0-23)
+- **zi**: Day of month (1-31)
+- **luna**: Month (1-12)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🔧 Available Scripts
 
-### Code Splitting
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm test` - Run tests
 
-This section has moved here: [https://sambitsahoo.com/blog/vite-code-splitting-that-works.html](https://sambitsahoo.com/blog/vite-code-splitting-that-works.html)
+## 📈 Analysis Features
 
-### Analyzing the Bundle Size
+### Energy Consumption Analysis
+- **Peak Hours Identification**: Automatically identifies top 5 peak consumption hours
+- **Load Factor Calculation**: Measures system efficiency (Average/Peak consumption)
+- **Consumption Distribution**: Analyzes energy usage patterns across different ranges
+- **Time Series Analysis**: Tracks consumption trends over time
+- **Variability Assessment**: Coefficient of variation for consumption predictability
 
-This section has moved here: [https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer)
+### PV System Recommendations
+- **Array Sizing**: Calculates optimal solar panel capacity
+- **Battery Design**: Determines storage requirements for 2-day autonomy
+- **Inverter Specifications**: Sizes power electronics with safety margins
+- **Financial Analysis**: Complete cost breakdown and ROI calculations
+- **System Options**: Conservative (80%), Optimal (100%), Aggressive (130%) sizing
 
-### Making a Progressive Web App
+## 🎯 Engineering Applications
 
-This section has moved here: [https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf](https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf)
+Perfect for:
+- **Energy Consultants**: Client energy audits and PV system proposals
+- **Electrical Engineers**: Load analysis and system design
+- **Solar Installers**: System sizing and cost estimation
+- **Facility Managers**: Energy consumption optimization
+- **Research**: Energy pattern analysis and efficiency studies
 
-### Advanced Configuration
+## 🤝 Contributing
 
-This section has moved here: [https://vitejs.dev/guide/build.html#advanced-base-options](https://vitejs.dev/guide/build.html#advanced-base-options)
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Deployment
+## 📄 License
 
-This section has moved here: [https://vitejs.dev/guide/build.html](https://vitejs.dev/guide/build.html)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### Troubleshooting
+## 🙏 Acknowledgments
 
-This section has moved here: [https://vitejs.dev/guide/troubleshooting.html](https://vitejs.dev/guide/troubleshooting.html)
+- Built with React and modern web technologies
+- Chart libraries: Recharts and Chart.js
+- File processing: SheetJS
+- Designed for engineering professionals
+
+## 📞 Support
+
+For support, please open an issue on GitHub or contact the development team.
+
+---
+
+**Made with ❤️ for engineers designing sustainable energy solutions**
