@@ -31,7 +31,7 @@
    - Deployment method: Select "GitHub"
    - Click "Connect to GitHub"
    - Authorize Heroku to access your GitHub
-   - Search for repository: `codespaces-react-1`
+   - Search for repository: `energy-consumption-analyzer`
    - Click "Connect"
 
 5. **Configure deployment:**
@@ -269,4 +269,4 @@ Your Electric Consumption Analyzer will be accessible 24/7 (with free tier sleep
 ---
 
 **Created:** October 20, 2025  
-**Repository:** cosmin-vestemean/codespaces-react-1
+**Repository:** cosmin-vestemean/energy-consumption-analyzer
