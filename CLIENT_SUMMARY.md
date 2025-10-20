@@ -45,11 +45,13 @@ The application identifies:
 Based on your consumption, the system calculates:
 
 - **Required Solar Panel Capacity** (in kW)
-- **Number of Solar Panels** needed (400W panels)
-- **Battery Storage Size** (for 2 days of backup power)
+- **Number of Solar Panels** needed (default: 415W panels, configurable 250-700W)
+- **Battery Storage Size** (for backup power, configurable autonomy days)
 - **Inverter Size** (to handle peak loads)
 - **Estimated Costs** (equipment + installation)
 - **Expected Savings** and payback period
+
+> **v2.0 Update:** All parameters are now configurable! See the PV Configuration Panel in the app for customization options based on [E.ON Romania data](https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html).
 
 ---
 
@@ -112,35 +114,40 @@ The 1.2 factor (20% extra) handles surge loads
 **How much will the system cost?**
 
 ```
-Equipment Costs:
-- Solar panels: Number of panels × 400W × €0.80/watt
-- Battery: Capacity in kWh × €400/kWh
-- Inverter: Size in kW × €300/kW
+Equipment Costs (using configurable parameters):
+- Solar panels: Number of panels × Panel Wattage × Price per Watt
+  (Default: 415W panels @ configurable RON/watt)
+- Battery: Capacity in kWh × Battery Cost per kWh (configurable)
+- Inverter: Size in kW × Inverter Cost per kW (configurable)
 
-Total Cost = Equipment Cost × 1.3
+Total Cost = Equipment Cost × Installation Multiplier (default: 1.3)
 (The 1.3 adds 30% for installation, wiring, mounting, etc.)
 ```
 
-**Example System Cost:**
-- 20 panels: 20 × 400 × 0.80 = €6,400
-- 66.7 kWh battery: 66.7 × 400 = €26,680
-- 6 kW inverter: 6 × 300 = €1,800
-- Equipment total: €34,880
-- **Total with installation: €45,344**
+**Example System Cost (using default 415W panels):**
+- 19 panels: 19 × 415W = 7,885W capacity
+- Battery and inverter: sized according to configurable parameters
+- **Total calculated based on current market rates**
+
+> **Note:** Exact costs depend on your configured parameters. Use the PV Configuration Panel to adjust prices based on your local market.
 
 ### Payback Period
 
 **How long until the system pays for itself?**
 
 ```
-Annual savings = Daily consumption × 365 days × €0.25/kWh
+Annual savings = Daily consumption × 365 days × Electricity Rate (RON/kWh)
 Payback period = Total system cost ÷ Annual savings
+
+Default: 0.80 RON/kWh (configurable range: 0.40-1.50 RON/kWh)
 ```
 
-**Example:**
+**Example (using default 0.80 RON/kWh):**
 - Daily usage: 30 kWh
-- Annual savings: 30 × 365 × 0.25 = €2,738/year
-- Payback: €45,344 ÷ €2,738 = **16.6 years**
+- Annual savings: 30 × 365 × 0.80 = 8,760 RON/year
+- Payback: Total system cost ÷ 8,760 RON = **Payback period (years)**
+
+> **Tip:** Adjust the electricity rate in the configuration panel to match your actual utility costs for accurate payback calculations.
 
 ---
 
@@ -205,19 +212,24 @@ Lower variation allows for more precise system sizing and better efficiency.
 
 ---
 
-## Important Assumptions
+## Important Parameters (v2.0 - All Configurable!)
 
-The calculations are based on these standard assumptions:
+> **Note:** Version 2.0 introduces full parametrization! All values below are **defaults** and can be customized in the PV Configuration Panel.
 
-| Parameter | Value | Explanation |
-|-----------|-------|-------------|
-| **System Efficiency** | 85% | Accounts for all losses (wiring, inverter, temperature) |
-| **Peak Sun Hours** | 4.5 hours/day | Average for European locations |
-| **Panel Size** | 400 watts | Standard modern solar panel |
-| **Battery Type** | Lithium-ion | 90% efficient, 5000+ cycles |
-| **Electricity Rate** | €0.25/kWh | Average European residential rate |
-| **System Lifetime** | 25 years | Standard warranty period |
-| **Autonomy** | 2 days | Backup power without sun |
+The calculations are based on these configurable parameters:
+
+| Parameter | Default Value | Configurable Range | Data Source |
+|-----------|---------------|-------------------|-------------|
+| **System Efficiency** | 85% | 70% - 95% | Industry standard |
+| **Peak Sun Hours** | 4.5 hours/day | 3.0 - 6.0 hours | Location dependent |
+| **Panel Size** | 415 watts | 250 - 700 watts | E.ON Romania standard |
+| **Battery Type** | Lithium-ion | - | 90% efficient (80-98% configurable) |
+| **Battery Cycles** | 5000 cycles | 3000 - 10000 | Technology dependent |
+| **Electricity Rate** | 0.80 RON/kWh | 0.40 - 1.50 RON/kWh | Romania market rate |
+| **System Lifetime** | 25 years | - | Standard warranty |
+| **Autonomy** | 2 days | 1 - 5 days | Backup requirements |
+
+**Source:** Defaults based on [E.ON Romania - "Câte panouri fotovoltaice sunt necesare unei case din România?"](https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html)
 
 ---
 
@@ -264,14 +276,14 @@ This analysis provides **preliminary estimates** only. For actual installation, 
 
 ## Questions & Answers
 
-### Q: Why 400W panels?
-**A:** This is the current industry standard for residential installations. Actual installations may use 350-450W panels.
+### Q: What panel sizes can I use?
+**A (v2.0):** The system now supports configurable panel sizes from 250W to 700W. The default is 415W based on [E.ON Romania data](https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html), but you can adjust this in the PV Configuration Panel to match your specific panels.
 
 ### Q: Why 4.5 peak sun hours?
-**A:** This is a conservative average for Europe. Actual values range from 3-6 hours depending on location.
+**A:** This is a conservative average for Romania and Europe. The value is configurable (range: 3.0-6.0 hours) to match your specific location's solar irradiation data.
 
-### Q: Can I use 300W panels instead?
-**A:** Yes, you'll need proportionally more panels: multiply the panel count by (400/300) = 1.33.
+### Q: Can I customize all the parameters?
+**A:** Yes! Version 2.0 introduces a complete parametrization system with 16 configurable parameters including panel wattage, efficiency, battery specs, costs, and more. See the PV Configuration Panel in the app or read PV_PARAMETRIZATION_GUIDE.md for details.
 
 ### Q: What about government incentives?
 **A:** These vary by country/region and are not included. Check local programs for rebates or tax credits.

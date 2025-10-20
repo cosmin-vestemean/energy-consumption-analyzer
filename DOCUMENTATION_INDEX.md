@@ -100,23 +100,24 @@ Access via `/docs/` route in the application:
 
 ### Solar Panel Sizing
 ```
-PV Capacity (kW) = Daily Consumption ÷ 4.5 hours ÷ 0.85
-Number of Panels = Capacity × 1000 ÷ 400W (round up)
+PV Capacity (kW) = Daily Consumption ÷ Peak Sun Hours ÷ System Efficiency
+Number of Panels = Capacity × 1000 ÷ Panel Wattage (default: 415W, configurable)
 ```
 
 ### Battery Sizing
 ```
-Battery (kWh) = Daily Consumption × 2 days ÷ 0.9
+Battery (kWh) = Daily Consumption × Autonomy Days ÷ Battery Efficiency
 ```
 
 ### Cost Calculation
 ```
-Total Cost = (Panel + Battery + Inverter) × 1.3
+Total Cost = (Panel + Battery + Inverter) × Installation Multiplier
 ```
 
 ### Payback Period
 ```
-Payback = Total Cost ÷ (Daily kWh × 365 × €0.25/kWh)
+Payback = Total Cost ÷ (Daily kWh × 365 × Electricity Rate)
+Note: All parameters now configurable in v2.0 - see PV_PARAMETRIZATION_GUIDE.md
 ```
 
 ---

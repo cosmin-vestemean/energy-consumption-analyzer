@@ -380,14 +380,20 @@ Interpretation:
 </code></pre>
 <hr>
 <h2>PV System Sizing Calculations</h2>
-<h3>Assumptions &amp; Constants</h3>
-<pre><code>System Efficiency (η_sys) = 0.85 (85%)
-Panel Wattage (P_panel) = 400 W
-Peak Sun Hours (PSH) = 4.5 hours/day
-Autonomy Days (D_auto) = 2 days
-Battery Efficiency (η_bat) = 0.9 (90%)
-Battery Cycle Life = 5000 cycles
-Inverter Safety Margin = 1.2 (20% oversizing)
+<div style="background-color: #e7f3ff; padding: 15px; border-left: 4px solid #2196F3; margin-bottom: 20px;">
+    <strong>📢 v2.0 Update:</strong> All parameters below are now <strong>configurable</strong> in the application interface. The values shown are defaults based on <a href="https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html" target="_blank">E.ON Romania data</a>.
+</div>
+<h3>Configurable Parameters (Defaults + Ranges)</h3>
+<pre><code>System Efficiency (η_sys) = 0.85 (85%) [Range: 0.70-0.95]
+Panel Wattage (P_panel) = 415 W [Range: 250-700 W]
+Peak Sun Hours (PSH) = 4.5 hours/day [Range: 3.0-6.0 hours]
+Autonomy Days (D_auto) = 2 days [Range: 1-5 days]
+Battery Efficiency (η_bat) = 0.90 (90%) [Range: 0.80-0.98]
+Battery Cycle Life = 5000 cycles [Range: 3000-10000 cycles]
+Inverter Safety Margin = 1.20 (20% oversizing) [Range: 1.10-1.50]
+Electricity Price = 0.80 RON/kWh [Range: 0.40-1.50 RON/kWh]
+
+Source: E.ON Romania - "Câte panouri fotovoltaice sunt necesare unei case din România?"
 </code></pre>
 <h3>1. Solar Array Sizing</h3>
 <h4>Required PV Array Capacity</h4>
@@ -488,10 +494,11 @@ Where:
 <h4>Annual Savings</h4>
 <pre><code>Annual Savings = Daily Energy × 365 × Electricity Rate × Energy Offset
 
-Formula: S_annual = E_daily × 365 × €0.25/kWh × (Offset/100)
+Formula: S_annual = E_daily × 365 × Price_elec × (Offset/100)
 
-Assumptions:
-  Electricity Rate = €0.25/kWh (average European rate)
+Configurable Parameters:
+  Electricity Rate = 0.80 RON/kWh (default) [Range: 0.40-1.50 RON/kWh]
+  Energy Offset = typically 70-100% of consumption covered by solar
 </code></pre>
 <h4>Payback Period</h4>
 <pre><code>Payback Period (years) = Total System Cost / Annual Savings

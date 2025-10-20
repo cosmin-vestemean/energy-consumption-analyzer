@@ -1,6 +1,8 @@
 # Quick Reference - Analysis & Formulas
 
-**Electric Consumption Analyzer** | Version 1.0 | October 2025
+**Electric Consumption Analyzer** | Version 2.0 ⚙️ PARAMETRIZABLE | October 2025
+
+> **NEW in v2.0:** All calculation parameters are now fully configurable! Values below show defaults based on E.ON Romania data. See [PV_PARAMETRIZATION_GUIDE.md](PV_PARAMETRIZATION_GUIDE.md) for customization.
 
 ---
 
@@ -21,17 +23,21 @@
 ### Solar Panels
 
 ```
-Required Capacity (kW) = Daily kWh ÷ 4.5 hours ÷ 0.85 efficiency
+Required Capacity (kW) = Daily kWh ÷ Peak Sun Hours ÷ System Efficiency
+Default: Daily kWh ÷ 4.5 hours ÷ 0.85 [configurable: 3.0-7.0h, 70-95%]
 
-Number of Panels = Capacity × 1000 ÷ 400 watts per panel (round up)
+Number of Panels = Capacity × 1000 ÷ Panel Wattage (round up)
+Default: Capacity × 1000 ÷ 415 watts [E.ON standard, configurable: 250-600W]
 ```
 
-**Example:** 30 kWh/day → 7.84 kW → **20 panels**
+**Example (default values):** 30 kWh/day → 7.84 kW → **19 panels @ 415W**
+**Example (old 400W panels):** 30 kWh/day → 7.84 kW → **20 panels @ 400W**
 
 ### Battery Storage
 
 ```
-Battery (kWh) = Daily kWh × 2 days ÷ 0.9 efficiency
+Battery (kWh) = Daily kWh × Autonomy Days ÷ Battery Efficiency
+Default: Daily kWh × 2 days ÷ 0.9 [configurable: 0.5-5 days, 70-98%]
 ```
 
 **Example:** 30 kWh/day → **66.7 kWh battery**
@@ -39,7 +45,8 @@ Battery (kWh) = Daily kWh × 2 days ÷ 0.9 efficiency
 ### Inverter
 
 ```
-Inverter (kW) = Peak consumption × 1.2 safety margin
+Inverter (kW) = Peak consumption × Safety Margin
+Default: Peak × 1.2 [configurable: 1.1-1.5 (10-50% margin)]
 ```
 
 **Example:** 5 kW peak → **6 kW inverter**
@@ -48,19 +55,24 @@ Inverter (kW) = Peak consumption × 1.2 safety margin
 
 ## 💰 Cost Estimation
 
-| Component | Price Formula |
-|-----------|---------------|
-| **Solar Panels** | Panels × 400W × €0.80/watt |
-| **Battery** | Capacity (kWh) × €400/kWh |
-| **Inverter** | Size (kW) × €300/kW |
-| **TOTAL** | Equipment × 1.3 (includes installation) |
+| Component | Price Formula | Notes |
+|-----------|---------------|-------|
+| **Solar Panels** | Panels × Wattage × Cost/W | Default: 415W × 3.98 RON/W [configurable] |
+| **Battery** | Capacity (kWh) × Cost/kWh | Default: 1,988 RON/kWh [configurable] |
+| **Inverter** | Size (kW) × Cost/kW | Default: 1,491 RON/kW [configurable] |
+| **TOTAL** | Equipment × Multiplier | Default: × 1.3 (30% installation) [configurable: 20-50%] |
+
+**Note:** Costs in RON (Romanian Leu). Previous versions used EUR. All costs are configurable in the application.
 
 ---
 
 ## 📈 Return on Investment
 
 ```
-Annual Savings = Daily kWh × 365 × €0.25/kWh
+Annual Savings = Daily kWh × 365 × Electricity Rate
+
+Default: Daily kWh × 365 × 0.80 RON/kWh [configurable: 0.50-2.00 RON/kWh]
+Previous versions used €0.25/kWh (European average)
 
 Payback Period = Total Cost ÷ Annual Savings
 ```
@@ -96,14 +108,20 @@ Payback Period = Total Cost ÷ Annual Savings
 
 ---
 
-## ⚙️ Key Assumptions
+## ⚙️ Key Assumptions (Default Values - All Configurable!)
 
-- **System Efficiency:** 85%
-- **Peak Sun Hours:** 4.5 hours/day
-- **Panel Size:** 400 watts
-- **Battery:** Lithium-ion, 90% efficient
-- **Electricity Rate:** €0.25/kWh
-- **Autonomy:** 2 days backup
+> **Version 2.0:** All parameters below are now configurable in the application. See [PV_PARAMETRIZATION_GUIDE.md](PV_PARAMETRIZATION_GUIDE.md) for customization options.
+
+- **System Efficiency:** 85% [range: 70-95%]
+- **Peak Sun Hours:** 4.5 hours/day [range: 3.0-7.0h, Romania average]
+- **Panel Size:** 415 watts [range: 250-600W, E.ON standard]
+- **Battery:** Lithium-ion, 90% efficient [range: 70-98%]
+- **Electricity Rate:** 0.80 RON/kWh [range: 0.50-2.00, configurable]
+- **Autonomy:** 2 days backup [range: 0.5-5 days]
+- **Production Ratio:** 1.3 [range: 1.0-2.0, E.ON Romania: 1.3-1.6]
+- **Installation Cost:** +30% [range: +20% to +50%]
+
+**Data Source:** E.ON Romania validated values + industry standards
 
 ---
 

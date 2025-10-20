@@ -282,14 +282,14 @@ Step 2: Calculate required solar capacity
         → This accounts for losses in the system
 
 Step 3: Calculate number of panels
-        → Required capacity ÷ 400 watts per panel
+        → Required capacity ÷ panel wattage (default: 415W, configurable 250-700W)
         → Round up to whole number
 </code></pre>
-<p><strong>Example:</strong></p>
+<p><strong>Example (using default 415W panels):</strong></p>
 <ul>
 <li>Daily consumption: 30 kWh</li>
 <li>Required capacity: 30 ÷ 4.5 ÷ 0.85 = 7.84 kW</li>
-<li>Number of panels: 7,840 watts ÷ 400 watts = <strong>20 panels</strong></li>
+<li>Number of panels: 7,840 watts ÷ 415 watts = <strong>19 panels</strong></li>
 </ul>
 <h3>Battery Storage Sizing</h3>
 <p><strong>How much battery capacity do you need?</strong></p>
@@ -335,14 +335,16 @@ Total Cost = Equipment Cost × 1.3
 </ul>
 <h3>Payback Period</h3>
 <p><strong>How long until the system pays for itself?</strong></p>
-<pre><code>Annual savings = Daily consumption × 365 days × €0.25/kWh
+<pre><code>Annual savings = Daily consumption × 365 days × Electricity Rate (RON/kWh)
 Payback period = Total system cost ÷ Annual savings
+
+Note: Electricity rate is now configurable (default: 0.80 RON/kWh, range: 0.40-1.50)
 </code></pre>
-<p><strong>Example:</strong></p>
+<p><strong>Example (using default 0.80 RON/kWh):</strong></p>
 <ul>
 <li>Daily usage: 30 kWh</li>
-<li>Annual savings: 30 × 365 × 0.25 = €2,738/year</li>
-<li>Payback: €45,344 ÷ €2,738 = <strong>16.6 years</strong></li>
+<li>Annual savings: 30 × 365 × 0.80 = 8,760 RON/year</li>
+<li>Payback: System cost ÷ 8,760 RON = <strong>Payback period (years)</strong></li>
 </ul>
 <hr>
 <h2>Three System Options</h2>
@@ -420,18 +422,18 @@ Lower variation allows for more precise system sizing and better efficiency.</p>
 </tr>
 <tr>
 <td><strong>Panel Size</strong></td>
-<td>400 watts</td>
-<td>Standard modern solar panel</td>
+<td>415 watts (default)</td>
+<td>Configurable: 250-700W. Based on E.ON Romania data</td>
 </tr>
 <tr>
 <td><strong>Battery Type</strong></td>
 <td>Lithium-ion</td>
-<td>90% efficient, 5000+ cycles</td>
+<td>90% efficient, 5000+ cycles (configurable)</td>
 </tr>
 <tr>
 <td><strong>Electricity Rate</strong></td>
-<td>€0.25/kWh</td>
-<td>Average European residential rate</td>
+<td>0.80 RON/kWh (default)</td>
+<td>Configurable: 0.40-1.50 RON/kWh. Romania market rate</td>
 </tr>
 <tr>
 <td><strong>System Lifetime</strong></td>

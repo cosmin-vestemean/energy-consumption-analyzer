@@ -201,17 +201,29 @@ Percentage in Range = (Count in Range / Total Readings) × 100%
 
 ## PV System Sizing Calculations
 
-### Assumptions & Constants
+### ⚙️ Version 2.0 - Parametrizable System
+
+**IMPORTANT:** Starting with version 2.0, all calculation parameters are now fully configurable through the application interface. The values below represent the **default settings** based on E.ON Romania data and industry standards.
+
+For complete customization options, see **PV_PARAMETRIZATION_GUIDE.md** or access the configuration panel in the application.
+
+### Assumptions & Constants (Default Values)
+
+**Note:** These are configurable parameters with ranges shown in parentheses.
 
 ```
-System Efficiency (η_sys) = 0.85 (85%)
-Panel Wattage (P_panel) = 400 W
-Peak Sun Hours (PSH) = 4.5 hours/day
-Autonomy Days (D_auto) = 2 days
-Battery Efficiency (η_bat) = 0.9 (90%)
-Battery Cycle Life = 5000 cycles
-Inverter Safety Margin = 1.2 (20% oversizing)
+System Efficiency (η_sys) = 0.85 (85%) [configurable: 70-95%]
+Panel Wattage (P_panel) = 415 W [configurable: 250-600W, E.ON standard]
+Peak Sun Hours (PSH) = 4.5 hours/day [configurable: 3.0-7.0h, Romania average]
+Autonomy Days (D_auto) = 2 days [configurable: 0.5-5 days]
+Battery Efficiency (η_bat) = 0.9 (90%) [configurable: 70-98%]
+Battery Cycle Life = 5000 cycles [configurable: 3000-10000]
+Inverter Safety Margin = 1.2 (20% oversizing) [configurable: 1.1-1.5]
+Electricity Price = 0.80 RON/kWh [configurable: 0.50-2.00 RON/kWh]
+Production Ratio = 1.3 [configurable: 1.0-2.0, E.ON: 1.3-1.6]
 ```
+
+**Reference Source:** E.ON Romania - "Câte panouri fotovoltaice sunt necesare unei case din România?"
 
 ### 1. Solar Array Sizing
 
@@ -223,10 +235,10 @@ Formula: P_pv = (E_daily / PSH) / η_sys
 
 Where:
   E_daily = average daily consumption (kWh)
-  PSH = peak sun hours per day (hours)
-  η_sys = overall system efficiency (0.85)
+  PSH = peak sun hours per day (hours) [default: 4.5, range: 3.0-7.0]
+  η_sys = overall system efficiency [default: 0.85, range: 0.70-0.95]
 
-Example:
+Example (using default values):
   If E_daily = 30 kWh
   P_pv = (30 / 4.5) / 0.85 = 7.84 kW
 ```
@@ -240,10 +252,12 @@ Formula: N_panels = ⌈(P_pv × 1000) / P_panel⌉
 Where:
   ⌈ ⌉ = ceiling function (round up)
   P_pv = PV array size in kW
-  P_panel = individual panel wattage (400W)
+  P_panel = individual panel wattage [default: 415W, range: 250-600W]
 
-Example:
-  N_panels = ⌈(7.84 × 1000) / 400⌉ = ⌈19.6⌉ = 20 panels
+Example (using default 415W panels):
+  N_panels = ⌈(7.84 × 1000) / 415⌉ = ⌈18.9⌉ = 19 panels
+  
+Note: With older 400W panels: ⌈(7.84 × 1000) / 400⌉ = 20 panels
 ```
 
 ### 2. Battery Storage Sizing
@@ -255,7 +269,7 @@ Formula: C_bat = (E_daily × D_auto) / η_bat
 
 Where:
   E_daily = average daily consumption (kWh)
-  D_auto = days of autonomy (2 days)
+  D_auto = days of autonomy [default: 2 days, range: 0.5-5 days]
   η_bat = battery round-trip efficiency (0.9)
 
 Example:
@@ -330,7 +344,8 @@ Installation Cost = Equipment Cost × 0.3 (30% for installation)
 Total System Cost = Equipment Cost × 1.3
 
 Where:
-  1.3 = installation multiplier (equipment + 30% installation)
+  1.3 = installation multiplier [default: 1.3 (30%), range: 1.2-1.5 (20-50%)]
+  Installation cost includes: labor, wiring, mounting, permits, commissioning
 ```
 
 ### Return on Investment (ROI)
@@ -339,10 +354,15 @@ Where:
 ```
 Annual Savings = Daily Energy × 365 × Electricity Rate × Energy Offset
 
-Formula: S_annual = E_daily × 365 × €0.25/kWh × (Offset/100)
+Formula: S_annual = E_daily × 365 × Price/kWh × (Offset/100)
 
 Assumptions:
-  Electricity Rate = €0.25/kWh (average European rate)
+  Electricity Rate = 0.80 RON/kWh [default for Romania, configurable: 0.50-2.00 RON/kWh]
+  Note: Previous versions used €0.25/kWh (European average)
+  
+Example:
+  If E_daily = 30 kWh, Offset = 100%, Price = 0.80 RON/kWh:
+  S_annual = 30 × 365 × 0.80 × 1.0 = 8,760 RON/year
 ```
 
 #### Payback Period
