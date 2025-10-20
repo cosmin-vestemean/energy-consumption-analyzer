@@ -87,7 +87,7 @@ function App() {
   };
 
   const openDocumentation = () => {
-    window.open('/docs/index.html', '_blank', 'width=1200,height=800');
+    window.open('/docs/index.html', '_blank', 'noopener,noreferrer');
   };
 
   return (
