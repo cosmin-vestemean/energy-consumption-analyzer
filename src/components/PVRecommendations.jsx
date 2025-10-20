@@ -16,7 +16,7 @@ import {
 } from 'recharts';
 import './PVRecommendations.css';
 
-const PVRecommendations = ({ analysis }) => {
+const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
   if (!analysis) return null;
 
   // PV System Calculations
@@ -45,10 +45,12 @@ const PVRecommendations = ({ analysis }) => {
     // Inverter Sizing (1.2x peak load for safety margin)
     const inverterSizeKw = peakPowerKw * 1.2;
     
-    // Cost Estimations (approximate)
-    const panelCostPerWatt = 0.8; // EUR per Watt
-    const batteryCostPerKwh = 400; // EUR per kWh
-    const inverterCostPerKw = 300; // EUR per kW
+    // Cost Estimations (in RON, converted from EUR estimates)
+    // EUR to RON conversion rate: ~4.97 (approximate)
+    const eurToRon = 4.97;
+    const panelCostPerWatt = 0.8 * eurToRon; // RON per Watt
+    const batteryCostPerKwh = 400 * eurToRon; // RON per kWh
+    const inverterCostPerKw = 300 * eurToRon; // RON per kW
     const installationCostMultiplier = 1.3; // 30% for installation, wiring, etc.
     
     const panelCost = numberOfPanels * panelWattage * panelCostPerWatt;
@@ -61,8 +63,8 @@ const PVRecommendations = ({ analysis }) => {
     const annualEnergyProduction = pvArraySizeKw * peakSunHours * 365;
     const energyOffsetPercentage = Math.min((annualEnergyProduction / (dailyEnergyKwh * 365)) * 100, 100);
     
-    // Payback calculations (assuming electricity cost of 0.25 EUR/kWh)
-    const electricityCostPerKwh = 0.25;
+    // Payback calculations using the configurable electricity price (RON/kWh)
+    const electricityCostPerKwh = electricityPrice;
     const annualSavings = dailyEnergyKwh * 365 * electricityCostPerKwh * (energyOffsetPercentage / 100);
     const paybackYears = totalSystemCost / annualSavings;
     
@@ -77,6 +79,8 @@ const PVRecommendations = ({ analysis }) => {
       annualEnergyProduction,
       energyOffsetPercentage,
       paybackYears,
+      annualSavings,
+      electricityCostPerKwh,
       costs: {
         panels: panelCost,
         battery: batteryCost,
@@ -84,7 +88,7 @@ const PVRecommendations = ({ analysis }) => {
         installation: equipmentCost * (installationCostMultiplier - 1)
       }
     };
-  }, [analysis]);
+  }, [analysis, electricityPrice]);
 
   // System sizing options (Conservative, Optimal, Aggressive)
   const systemOptions = useMemo(() => {
@@ -187,7 +191,7 @@ const PVRecommendations = ({ analysis }) => {
                 </div>
                 <div className="spec-row total-cost">
                   <span>Total Cost:</span>
-                  <span>€{option.cost.toLocaleString()}</span>
+                  <span>{option.cost.toLocaleString('ro-RO')} RON</span>
                 </div>
               </div>
             </div>
@@ -214,7 +218,7 @@ const PVRecommendations = ({ analysis }) => {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value) => [`€${value.toLocaleString()}`, 'Cost']} />
+              <Tooltip formatter={(value) => [`${value.toLocaleString('ro-RO')} RON`, 'Cost']} />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -225,11 +229,11 @@ const PVRecommendations = ({ analysis }) => {
             <BarChart data={systemOptions}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis yAxisId="left" orientation="left" label={{ value: 'Cost (€)', angle: -90, position: 'insideLeft' }} />
+              <YAxis yAxisId="left" orientation="left" label={{ value: 'Cost (RON)', angle: -90, position: 'insideLeft' }} />
               <YAxis yAxisId="right" orientation="right" label={{ value: 'PV Size (kW)', angle: 90, position: 'insideRight' }} />
               <Tooltip 
                 formatter={(value, name) => [
-                  name === 'cost' ? `€${value.toLocaleString()}` : `${value.toFixed(2)} kW`,
+                  name === 'cost' ? `${value.toLocaleString('ro-RO')} RON` : `${value.toFixed(2)} kW`,
                   name === 'cost' ? 'Total Cost' : 'PV Array Size'
                 ]}
               />
@@ -315,11 +319,15 @@ const PVRecommendations = ({ analysis }) => {
             <div className="spec-list">
               <div className="spec-item">
                 <span>Total Investment:</span>
-                <span>€{pvCalculations.totalSystemCost.toLocaleString()}</span>
+                <span>{pvCalculations.totalSystemCost.toLocaleString('ro-RO')} RON</span>
+              </div>
+              <div className="spec-item">
+                <span>Electricity Price:</span>
+                <span>{pvCalculations.electricityCostPerKwh.toFixed(2)} RON/kWh</span>
               </div>
               <div className="spec-item">
                 <span>Annual Savings:</span>
-                <span>€{(pvCalculations.dailyEnergyKwh * 365 * 0.25).toLocaleString()}</span>
+                <span>{pvCalculations.annualSavings.toLocaleString('ro-RO')} RON</span>
               </div>
               <div className="spec-item">
                 <span>Payback Period:</span>
@@ -327,7 +335,7 @@ const PVRecommendations = ({ analysis }) => {
               </div>
               <div className="spec-item">
                 <span>25-year ROI:</span>
-                <span>{(((pvCalculations.dailyEnergyKwh * 365 * 0.25 * 25) / pvCalculations.totalSystemCost - 1) * 100).toFixed(0)}%</span>
+                <span>{(((pvCalculations.annualSavings * 25) / pvCalculations.totalSystemCost - 1) * 100).toFixed(0)}%</span>
               </div>
             </div>
           </div>
