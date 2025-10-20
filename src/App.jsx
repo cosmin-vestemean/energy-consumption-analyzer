@@ -87,7 +87,8 @@ function App() {
   };
 
   const openDocumentation = () => {
-    window.open('/docs/index.html', '_blank');
+    const docsUrl = process.env.PUBLIC_URL + '/docs/index.html';
+    window.open(docsUrl, 'documentation', 'width=1200,height=800,scrollbars=yes,resizable=yes');
   };
 
   return (
