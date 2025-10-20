@@ -87,7 +87,9 @@ function App() {
   };
 
   const openDocumentation = () => {
-    window.open('/docs/index.html', '_blank', 'width=1200,height=800');
+    // Use absolute URL to ensure proper navigation in production
+    const docsUrl = `${window.location.origin}/docs/index.html`;
+    window.open(docsUrl, '_blank', 'width=1200,height=800');
   };
 
   return (
