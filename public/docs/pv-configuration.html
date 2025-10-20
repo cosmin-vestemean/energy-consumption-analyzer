@@ -3,254 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PV System Configuration - Electric Consumption Analyzer</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .back-button {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            margin-bottom: 20px;
-            transition: background 0.3s;
-        }
-
-        .back-button:hover {
-            background: #764ba2;
-        }
-
-        h1 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 2.5em;
-        }
-
-        h2 {
-            color: #667eea;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-        }
-
-        h3 {
-            color: #764ba2;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        h4 {
-            color: #555;
-            margin-top: 15px;
-            margin-bottom: 8px;
-        }
-
-        p {
-            line-height: 1.8;
-            margin-bottom: 15px;
-            color: #333;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-
-        .info-box {
-            background: #e8f4f8;
-            border-left: 4px solid #2196F3;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-        }
-
-        .success-box {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 8px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        tr:hover {
-            background: #f5f7ff;
-        }
-
-        ul, ol {
-            margin-left: 30px;
-            margin-bottom: 15px;
-            line-height: 1.8;
-        }
-
-        li {
-            margin-bottom: 8px;
-        }
-
-        code {
-            background: #f4f4f4;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            color: #d63384;
-        }
-
-        pre {
-            background: #f4f4f4;
-            padding: 15px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 15px 0;
-            border-left: 4px solid #667eea;
-        }
-
-        .parameter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .parameter-card {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #e9ecef;
-            transition: all 0.3s;
-        }
-
-        .parameter-card:hover {
-            border-color: #667eea;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
-        }
-
-        .parameter-card .param-name {
-            font-weight: 600;
-            color: #667eea;
-            margin-bottom: 5px;
-        }
-
-        .parameter-card .param-value {
-            font-size: 1.1em;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .parameter-card .param-description {
-            font-size: 0.9em;
-            color: #666;
-        }
-
-        .step-number {
-            display: inline-block;
-            background: #667eea;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 30px;
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin-left: 0;
-        }
-
-        .feature-list li:before {
-            content: "✓ ";
-            color: #28a745;
-            font-weight: bold;
-            margin-right: 8px;
-        }
-
-        .eon-badge {
-            background: linear-gradient(135deg, #00C49F 0%, #0088FE 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85em;
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .back-button {
-                display: none;
-            }
-        }
-    </style>
+    <title>PV Configuration - Energy Consumption Analyzer</title>
+    <link rel="stylesheet" href="docs-style.css">
 </head>
 <body>
+    <div class="header-bar">
+        <div class="nav-header">
+            <div class="page-title">⚙️ PV System Configuration</div>
+            <div class="nav-buttons">
+                <a href="/docs/index.html" class="home-button">📚 Documentation Hub</a>
+                <a href="javascript:window.close()" class="back-button">← Back</a>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <a href="/docs/index.html" class="back-button">← Back to Documentation Hub</a>
+        <div class="doc-content">
+<a href="/docs/index.html" class="back-button">← Back to Documentation Hub</a>
         
         <h1>⚙️ Sistem Parametrizabil PV</h1>
         <p class="subtitle">Configurare completă a parametrilor pentru recomandări panouri fotovoltaice</p>
@@ -694,6 +463,8 @@
             <strong>Versiune:</strong> 2.0 | <strong>Ultima actualizare:</strong> Octombrie 2025<br>
             <strong>Surse:</strong> E.ON România, Standarde Industrie, Date Piață 2024-2025
         </p>
+
+        </div>
     </div>
 </body>
 </html>

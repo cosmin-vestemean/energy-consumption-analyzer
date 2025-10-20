@@ -1,0 +1,371 @@
+/* VINCI-Inspired Documentation Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f7fa;
+    line-height: 1.6;
+    color: #4a5568;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header Bar */
+.header-bar {
+    background: #ffffff;
+    padding: 20px 40px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-bottom: 3px solid #5a67d8;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-header {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.page-title {
+    color: #1a202c;
+    font-size: 1.4em;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.back-button, .home-button {
+    padding: 8px 18px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    font-size: 0.9em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    white-space: nowrap;
+}
+
+.back-button {
+    background: #5a67d8;
+    color: white;
+}
+
+.back-button:hover {
+    background: #4c51bf;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.home-button {
+    background: white;
+    color: #5a67d8;
+    border: 1px solid #5a67d8;
+}
+
+.home-button:hover {
+    background: #f7fafc;
+}
+
+/* Main Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.doc-content {
+    background: white;
+    padding: 40px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
+}
+
+/* Typography */
+h1 {
+    color: #1a202c;
+    margin-bottom: 16px;
+    font-size: 2.2em;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+h2 {
+    color: #1a202c;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    font-size: 1.6em;
+    font-weight: 600;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #edf2f7;
+}
+
+h3 {
+    color: #2d3748;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+h4 {
+    color: #4a5568;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 16px;
+    line-height: 1.7;
+    color: #4a5568;
+}
+
+strong {
+    color: #1a202c;
+    font-weight: 600;
+}
+
+/* Lists */
+ul, ol {
+    margin: 16px 0;
+    padding-left: 24px;
+}
+
+li {
+    margin-bottom: 10px;
+    line-height: 1.7;
+}
+
+ul li::marker {
+    color: #5a67d8;
+}
+
+/* Code and Pre */
+code {
+    background: #edf2f7;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #5a67d8;
+}
+
+pre {
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 20px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 20px 0;
+    border: 1px solid #4a5568;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: #e2e8f0;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background: #f7fafc;
+    font-weight: 600;
+    color: #1a202c;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover {
+    background: #f7fafc;
+}
+
+/* Special Boxes */
+.info-box, .warning-box, .success-box, .formula-box {
+    padding: 20px;
+    margin: 24px 0;
+    border-radius: 6px;
+    border-left: 4px solid;
+}
+
+.info-box {
+    background: #ebf8ff;
+    border-left-color: #3182ce;
+}
+
+.info-box strong {
+    color: #2c5282;
+}
+
+.warning-box {
+    background: #fffaf0;
+    border-left-color: #ed8936;
+}
+
+.warning-box strong {
+    color: #9c4221;
+}
+
+.success-box {
+    background: #f0fff4;
+    border-left-color: #48bb78;
+}
+
+.success-box strong {
+    color: #22543d;
+}
+
+.formula-box {
+    background: #faf5ff;
+    border-left-color: #5a67d8;
+    font-family: 'Courier New', monospace;
+}
+
+.formula-box strong {
+    color: #4c51bf;
+}
+
+/* Example boxes */
+.example {
+    background: #f7fafc;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #5a67d8;
+}
+
+.example h4 {
+    color: #5a67d8;
+    margin-top: 0;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid #5a67d8;
+    padding-left: 20px;
+    margin: 20px 0;
+    color: #4a5568;
+    font-style: italic;
+}
+
+/* Links */
+a {
+    color: #5a67d8;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #4c51bf;
+    text-decoration: underline;
+}
+
+/* Print styles */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .header-bar, .nav-header, .back-button, .home-button {
+        display: none;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .doc-content {
+        box-shadow: none;
+        border: none;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-bar {
+        padding: 16px 20px;
+    }
+    
+    .nav-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .page-title {
+        font-size: 1.2em;
+    }
+    
+    .nav-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .back-button, .home-button {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .container {
+        padding: 24px 16px;
+    }
+    
+    .doc-content {
+        padding: 24px 20px;
+    }
+    
+    h1 {
+        font-size: 1.8em;
+    }
+    
+    h2 {
+        font-size: 1.4em;
+    }
+    
+    h3 {
+        font-size: 1.2em;
+    }
+    
+    table {
+        font-size: 0.9em;
+    }
+    
+    th, td {
+        padding: 10px 12px;
+    }
+}
