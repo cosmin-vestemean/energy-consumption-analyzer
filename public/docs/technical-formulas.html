@@ -48,10 +48,10 @@
 </ul>
 <h3>Data Validation</h3>
 <p>Each data point is validated against the following criteria:</p>
-<pre><code>Ôťô energie Ôëą 0 (allows zero consumption)
-Ôťô 0 ÔëĄ ora ÔëĄ 23
-Ôťô 1 ÔëĄ zi ÔëĄ 31
-Ôťô 1 ÔëĄ luna ÔëĄ 12
+<pre><code>✔ energie ≥ 0 (allows zero consumption)
+✔ 0 ≤ ora ≤ 23
+✔ 1 ≤ zi ≤ 31
+✔ 1 ≤ luna ≤ 12
 </code></pre>
 <p><strong>Data Handling:</strong></p>
 <ul>
@@ -63,7 +63,7 @@
 <h2>Statistical Analysis</h2>
 <h3>1. Basic Statistics</h3>
 <h4>Total Consumption</h4>
-<pre><code>Total Consumption = ╬ú(energie_i) for all i data points
+<pre><code>Total Consumption = Σ(energie_i) for all i data points
 
 Where:
   energie_i = energy consumption at reading i
@@ -71,7 +71,7 @@ Where:
 <h4>Average Hourly Consumption</h4>
 <pre><code>Average Hourly Consumption = Total Consumption / Number of Data Points
 
-Formula: avg = ╬ú(E_i) / n
+Formula: avg = Σ(E_i) / n
 
 Where:
   E_i = energy value at reading i
@@ -83,7 +83,7 @@ Minimum Consumption = min(energie_i) for all i
 </code></pre>
 <h3>2. Hourly Statistics</h3>
 <p>For each hour h (0-23):</p>
-<pre><code>Hourly Average(h) = ╬ú(E_h,i) / n_h
+<pre><code>Hourly Average(h) = Σ(E_h,i) / n_h
 
 Hourly Maximum(h) = max(E_h,i)
 
@@ -94,9 +94,9 @@ Where:
   n_h = number of readings at hour h
 </code></pre>
 <h3>3. Daily Statistics</h3>
-<pre><code>Daily Total(d) = ╬ú(energie_i) for all readings on day d
+<pre><code>Daily Total(d) = Σ(energie_i) for all readings on day d
 
-Daily Average = ╬ú(Daily Total_d) / Number of Days
+Daily Average = Σ(Daily Total_d) / Number of Days
 
 Daily Maximum = max(Daily Total_d)
 
@@ -109,9 +109,9 @@ Where:
 <h2>Consumption Pattern Analysis</h2>
 <h3>1. Peak vs Off-Peak Analysis</h3>
 <p><strong>Peak Hours Definition:</strong> 10:00 - 19:00 (10 AM - 7 PM)<br><strong>Off-Peak Hours Definition:</strong> 00:00 - 06:00, 22:00 - 23:00 (12 AM - 6 AM, 10 PM - 11 PM)</p>
-<pre><code>Peak Average = ╬ú(E_peak) / n_peak
+<pre><code>Peak Average = Σ(E_peak) / n_peak
 
-Off-Peak Average = ╬ú(E_off-peak) / n_off-peak
+Off-Peak Average = Σ(E_off-peak) / n_off-peak
 
 Peak-to-Off-Peak Ratio = Peak Average / Off-Peak Average
 
@@ -133,12 +133,12 @@ Where:
 
 Interpretation:
   LF &gt; 70%: High and consistent energy usage (efficient)
-  40% &lt; LF ÔëĄ 70%: Moderate usage with some peaks
-  LF ÔëĄ 40%: High variability, peak-dominated usage
+  40% &lt; LF ≤ 70%: Moderate usage with some peaks
+  LF ≤ 40%: High variability, peak-dominated usage
 </code></pre>
 <h3>3. Consumption Variability</h3>
 <h4>Variance</h4>
-<pre><code>Variance = ╬ú((E_i - μ)┬▓) / n
+<pre><code>Variance = Σ((E_i - μ)²) / n
 
 Where:
   E_i = energy value at reading i
@@ -146,17 +146,17 @@ Where:
   n = total number of readings
 </code></pre>
 <h4>Standard Deviation</h4>
-<pre><code>Standard Deviation (σ) = ÔłÜVariance
+<pre><code>Standard Deviation (σ) = √Variance
 
-σ = ÔłÜ[╬ú((E_i - μ)┬▓) / n]
+σ = √[Σ((E_i - μ)²) / n]
 </code></pre>
 <h4>Coefficient of Variation (CV)</h4>
 <pre><code>Coefficient of Variation = (σ / μ) × 100%
 
 Interpretation:
   CV &gt; 100%: Very high variability
-  50% &lt; CV ÔëĄ 100%: Moderate variability
-  CV ÔëĄ 50%: Low variability, consistent usage
+  50% &lt; CV ≤ 100%: Moderate variability
+  CV ≤ 50%: Low variability, consistent usage
 </code></pre>
 <h3>4. Consumption Distribution</h3>
 <p>Data is categorized into consumption ranges:</p>
@@ -341,11 +341,11 @@ Installation &amp; Wiring: ~23% of total cost (30% of equipment cost)
 <h2>Data Aggregation for Visualization</h2>
 <h3>Large Datasets (&gt; 1000 data points)</h3>
 <p>For performance optimization with yearly data:</p>
-<pre><code>Daily Average = ╬ú(E_hourly) / 24
+<pre><code>Daily Average = Σ(E_hourly) / 24
 
 Where data is grouped by day-month combination and averaged
 </code></pre>
-<h3>Small Datasets (ÔëĄ 1000 data points)</h3>
+<h3>Small Datasets (≤ 1000 data points)</h3>
 <p>All hourly data points are displayed without aggregation.</p>
 <hr>
 <h2>Quality Metrics &amp; Interpretations</h2>
