@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { defaultPVConfig, validateConfig } from '../config/pvSystemConfig';
+import React, { useMemo, useState } from 'react';
+import { defaultPVConfig, validateConfig, mergeConfig } from '../config/pvSystemConfig';
+import { scenarioPresets } from '../config/pvConfigExamples';
 import './PVConfigPanel.css';
 
 const PVConfigPanel = ({ config, onConfigChange }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [localConfig, setLocalConfig] = useState(config || defaultPVConfig);
   const [validationResult, setValidationResult] = useState({ isValid: true, warnings: [] });
+  const [selectedScenarioId, setSelectedScenarioId] = useState('');
+
+  const selectedScenario = useMemo(
+    () => scenarioPresets.find((scenario) => scenario.id === selectedScenarioId) || null,
+    [selectedScenarioId]
+  );
 
   const handleFieldChange = (category, field, value) => {
     const newConfig = {
@@ -32,14 +39,56 @@ const PVConfigPanel = ({ config, onConfigChange }) => {
   const handleResetToDefaults = () => {
     setLocalConfig(defaultPVConfig);
     setValidationResult({ isValid: true, warnings: [] });
+    setSelectedScenarioId('');
     if (onConfigChange) {
       onConfigChange(defaultPVConfig);
     }
   };
 
+  const handleScenarioApply = () => {
+    if (!selectedScenario) return;
+    const mergedConfig = mergeConfig(selectedScenario.config);
+    setLocalConfig(mergedConfig);
+    const validation = validateConfig(mergedConfig);
+    setValidationResult(validation);
+    if (onConfigChange) {
+      onConfigChange(mergedConfig);
+    }
+    setIsExpanded(true);
+  };
+
   return (
     <div className="pv-config-panel">
       <h3>⚙️ Configurare Parametri Sistem Fotovoltaic</h3>
+
+      <div className="preset-selector">
+        <label htmlFor="preset-select">Scenarii predefinite</label>
+        <div className="preset-controls">
+          <select
+            id="preset-select"
+            value={selectedScenarioId}
+            onChange={(e) => setSelectedScenarioId(e.target.value)}
+          >
+            <option value="">Selectează un scenariu</option>
+            {scenarioPresets.map((scenario) => (
+              <option key={scenario.id} value={scenario.id}>
+                {scenario.label}
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            className="preset-apply-btn"
+            onClick={handleScenarioApply}
+            disabled={!selectedScenarioId}
+          >
+            Aplică scenariul
+          </button>
+        </div>
+        {selectedScenario && (
+          <p className="preset-description">{selectedScenario.description}</p>
+        )}
+      </div>
       
       <button
         className={`config-toggle-btn ${isExpanded ? 'active' : ''}`}

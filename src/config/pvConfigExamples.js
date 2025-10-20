@@ -159,7 +159,7 @@ export const mountainConfig = {
   solar: {
     peakSunHours: 4.8, // Better sun at altitude
     productionRatio: 1.4,
-    panelEfficiency: 0.82, // Lower temps improve efficiency
+    panelEfficiency: 0.88, // Cooler air improves efficiency above baseline
   },
   battery: {
     autonomyDays: 3, // More autonomy needed
@@ -185,6 +185,69 @@ export const urbanHighRiseConfig = {
     },
   },
 };
+
+export const scenarioPresets = [
+  {
+    id: 'budget',
+    label: 'Budget',
+    description: 'Economical configuration with minimal costs',
+    config: budgetConfig,
+  },
+  {
+    id: 'premium',
+    label: 'Premium',
+    description: 'High-end equipment for maximum efficiency and reliability',
+    config: premiumConfig,
+  },
+  {
+    id: 'north-ro',
+    label: 'North Romania',
+    description: 'Optimized for regions with lower solar irradiation (Cluj, Maramureș, etc.)',
+    config: northernRomaniaConfig,
+  },
+  {
+    id: 'south-ro',
+    label: 'South Romania',
+    description: 'Adjusts for higher irradiation in southern areas (Bucharest, Constanța, etc.)',
+    config: southernRomaniaConfig,
+  },
+  {
+    id: 'off-grid',
+    label: 'Off-Grid',
+    description: 'Complete autonomy with extended battery and inverter sizing',
+    config: offGridConfig,
+  },
+  {
+    id: 'grid-minimal',
+    label: 'Grid-Tied Minimal',
+    description: 'Minimal battery storage while remaining grid connected',
+    config: gridTiedMinimalConfig,
+  },
+  {
+    id: 'ev-ready',
+    label: 'EV Ready',
+    description: 'Dimensioned for homes that plan to charge an electric vehicle',
+    config: evReadyConfig,
+  },
+  {
+    id: 'market-2024',
+    label: 'Market 2024',
+    description: 'Reflects October 2025 market prices for equipment and energy',
+    config: currentMarket2024Config,
+  },
+  {
+    id: 'mountain',
+    label: 'Mountain',
+    description: 'Tailored for high altitude sites with cooler temperatures',
+    config: mountainConfig,
+  },
+  {
+    id: 'urban',
+    label: 'Urban',
+    description: 'Adapts for tall buildings and possible shading in cities',
+    config: urbanHighRiseConfig,
+  },
+];
 
 // Usage example in your application:
 /*
