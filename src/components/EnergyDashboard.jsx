@@ -31,15 +31,6 @@ const EnergyDashboard = ({ data, analysis }) => {
     const uniqueMonthSet = new Set(data.map(row => row.luna));
     const uniqueMonths = uniqueMonthSet.size;
     
-    // Debug logging
-    console.log('Data Coverage Debug:', {
-      totalRows: data.length,
-      uniqueDays: uniqueDays,
-      uniqueMonths: uniqueMonths,
-      monthsFound: Array.from(uniqueMonthSet).sort((a, b) => a - b),
-      sampleRows: data.slice(0, 5).map(r => ({ luna: r.luna, zi: r.zi, an: r.an, ora: r.ora }))
-    });
-    
     // Calculate date range from actual luna/zi/an values
     const sortedData = [...data].sort((a, b) => {
       const dateA = new Date(a.an, a.luna - 1, a.zi, a.ora);
@@ -52,13 +43,6 @@ const EnergyDashboard = ({ data, analysis }) => {
     
     const minDate = new Date(firstRow.an, firstRow.luna - 1, firstRow.zi);
     const maxDate = new Date(lastRow.an, lastRow.luna - 1, lastRow.zi);
-    
-    console.log('Date Range:', {
-      firstRow: { luna: firstRow.luna, zi: firstRow.zi, an: firstRow.an },
-      lastRow: { luna: lastRow.luna, zi: lastRow.zi, an: lastRow.an },
-      minDate: minDate.toLocaleDateString(),
-      maxDate: maxDate.toLocaleDateString()
-    });
     
     return {
       minDate,
