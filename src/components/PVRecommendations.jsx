@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   BarChart,
   Bar,
@@ -14,20 +14,25 @@ import {
   Pie,
   Cell
 } from 'recharts';
+import { defaultPVConfig } from '../config/pvSystemConfig';
+import PVConfigPanel from './PVConfigPanel';
 import './PVRecommendations.css';
 
-const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
+const PVRecommendations = ({ analysis, electricityPrice }) => {
   if (!analysis) return null;
+
+  // State for configuration
+  const [config, setConfig] = useState(defaultPVConfig);
 
   // PV System Calculations
   const pvCalculations = useMemo(() => {
-    // Assumptions for calculations
-    const systemEfficiency = 0.85; // Overall system efficiency (85%)
-    const panelWattage = 400; // Watts per panel
-    const peakSunHours = 4.5; // Average peak sun hours per day
-    const autonomyDays = 2; // Days of autonomy
-    const batteryEfficiency = 0.9; // Battery round-trip efficiency
-    const batteryCycleLife = 5000; // Battery cycles
+    // Use configuration values
+    const systemEfficiency = config.solar.panelEfficiency;
+    const panelWattage = config.solar.panelWattage;
+    const peakSunHours = config.solar.peakSunHours;
+    const autonomyDays = config.battery.autonomyDays;
+    const batteryEfficiency = config.battery.batteryEfficiency;
+    const batteryCycleLife = config.battery.batteryCycleLife;
     
     // Daily energy requirement (kWh)
     const dailyEnergyKwh = analysis.avgDailyConsumption;
@@ -42,16 +47,14 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
     // Battery Sizing
     const batteryCapacityKwh = (dailyEnergyKwh * autonomyDays) / batteryEfficiency;
     
-    // Inverter Sizing (1.2x peak load for safety margin)
-    const inverterSizeKw = peakPowerKw * 1.2;
+    // Inverter Sizing (configurable safety margin)
+    const inverterSizeKw = peakPowerKw * config.inverter.safetyMargin;
     
-    // Cost Estimations (in RON, converted from EUR estimates)
-    // EUR to RON conversion rate: ~4.97 (approximate)
-    const eurToRon = 4.97;
-    const panelCostPerWatt = 0.8 * eurToRon; // RON per Watt
-    const batteryCostPerKwh = 400 * eurToRon; // RON per kWh
-    const inverterCostPerKw = 300 * eurToRon; // RON per kW
-    const installationCostMultiplier = 1.3; // 30% for installation, wiring, etc.
+    // Cost Estimations (using configuration values)
+    const panelCostPerWatt = config.solar.panelCostPerWatt; // RON per Watt
+    const batteryCostPerKwh = config.battery.batteryCostPerKwh; // RON per kWh
+    const inverterCostPerKw = config.inverter.inverterCostPerKw; // RON per kW
+    const installationCostMultiplier = config.installation.installationMultiplier;
     
     const panelCost = numberOfPanels * panelWattage * panelCostPerWatt;
     const batteryCost = batteryCapacityKwh * batteryCostPerKwh;
@@ -63,8 +66,8 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
     const annualEnergyProduction = pvArraySizeKw * peakSunHours * 365;
     const energyOffsetPercentage = Math.min((annualEnergyProduction / (dailyEnergyKwh * 365)) * 100, 100);
     
-    // Payback calculations using the configurable electricity price (RON/kWh)
-    const electricityCostPerKwh = electricityPrice;
+    // Payback calculations using the configurable or passed electricity price (RON/kWh)
+    const electricityCostPerKwh = electricityPrice || config.financial.electricityPricePerKwh;
     const annualSavings = dailyEnergyKwh * 365 * electricityCostPerKwh * (energyOffsetPercentage / 100);
     const paybackYears = totalSystemCost / annualSavings;
     
@@ -86,28 +89,36 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
         battery: batteryCost,
         inverter: inverterCost,
         installation: equipmentCost * (installationCostMultiplier - 1)
+      },
+      // Add config metadata
+      configUsed: {
+        panelWattage,
+        peakSunHours,
+        productionRatio: config.solar.productionRatio,
+        panelAreaM2: config.solar.panelAreaM2,
       }
     };
-  }, [analysis, electricityPrice]);
+  }, [analysis, electricityPrice, config]);
 
   // System sizing options (Conservative, Optimal, Aggressive)
   const systemOptions = useMemo(() => {
     const base = pvCalculations;
+    const options = config.systemOptions;
     
     return [
       {
         name: 'Conservative',
-        multiplier: 0.8,
+        multiplier: options.conservative.pvMultiplier,
         description: 'Covers 80% of energy needs, lower cost, grid backup needed',
-        pvSize: base.pvArraySizeKw * 0.8,
-        panels: Math.ceil(base.numberOfPanels * 0.8),
-        battery: base.batteryCapacityKwh * 0.6,
-        cost: base.totalSystemCost * 0.75,
-        offset: base.energyOffsetPercentage * 0.8
+        pvSize: base.pvArraySizeKw * options.conservative.pvMultiplier,
+        panels: Math.ceil(base.numberOfPanels * options.conservative.pvMultiplier),
+        battery: base.batteryCapacityKwh * options.conservative.batteryMultiplier,
+        cost: base.totalSystemCost * options.conservative.costMultiplier,
+        offset: base.energyOffsetPercentage * options.conservative.offsetMultiplier
       },
       {
         name: 'Optimal',
-        multiplier: 1.0,
+        multiplier: options.optimal.pvMultiplier,
         description: 'Covers 100% of average needs, balanced approach',
         pvSize: base.pvArraySizeKw,
         panels: base.numberOfPanels,
@@ -117,16 +128,16 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
       },
       {
         name: 'Aggressive',
-        multiplier: 1.3,
+        multiplier: options.aggressive.pvMultiplier,
         description: 'Oversized for future expansion and peak demands',
-        pvSize: base.pvArraySizeKw * 1.3,
-        panels: Math.ceil(base.numberOfPanels * 1.3),
-        battery: base.batteryCapacityKwh * 1.2,
-        cost: base.totalSystemCost * 1.4,
-        offset: Math.min(base.energyOffsetPercentage * 1.3, 100)
+        pvSize: base.pvArraySizeKw * options.aggressive.pvMultiplier,
+        panels: Math.ceil(base.numberOfPanels * options.aggressive.pvMultiplier),
+        battery: base.batteryCapacityKwh * options.aggressive.batteryMultiplier,
+        cost: base.totalSystemCost * options.aggressive.costMultiplier,
+        offset: Math.min(base.energyOffsetPercentage * options.aggressive.offsetMultiplier, 100)
       }
     ];
-  }, [pvCalculations]);
+  }, [pvCalculations, config]);
 
   // Cost breakdown data for chart
   const costBreakdownData = [
@@ -141,6 +152,9 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
   return (
     <div className="pv-recommendations">
       <h2>☀️ Photovoltaic System Recommendations</h2>
+      
+      {/* Configuration Panel */}
+      <PVConfigPanel config={config} onConfigChange={setConfig} />
       
       <div className="summary-cards">
         <div className="summary-card highlight">
@@ -257,7 +271,7 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
               </div>
               <div className="spec-item">
                 <span>Number of Panels:</span>
-                <span>{pvCalculations.numberOfPanels} × 400W</span>
+                <span>{pvCalculations.numberOfPanels} × {pvCalculations.configUsed.panelWattage}W</span>
               </div>
               <div className="spec-item">
                 <span>Annual Production:</span>
@@ -279,15 +293,15 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
               </div>
               <div className="spec-item">
                 <span>Autonomy:</span>
-                <span>2 days</span>
+                <span>{config.battery.autonomyDays} days</span>
               </div>
               <div className="spec-item">
                 <span>Technology:</span>
-                <span>Lithium-ion</span>
+                <span>{config.battery.batteryTechnology}</span>
               </div>
               <div className="spec-item">
                 <span>Cycle Life:</span>
-                <span>5000+ cycles</span>
+                <span>{config.battery.batteryCycleLife.toLocaleString()}+ cycles</span>
               </div>
             </div>
           </div>
@@ -301,11 +315,11 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
               </div>
               <div className="spec-item">
                 <span>Type:</span>
-                <span>Hybrid Grid-tie</span>
+                <span>{config.inverter.inverterType}</span>
               </div>
               <div className="spec-item">
                 <span>Efficiency:</span>
-                <span>97%+</span>
+                <span>{(config.inverter.inverterEfficiency * 100).toFixed(0)}%+</span>
               </div>
               <div className="spec-item">
                 <span>Monitoring:</span>
@@ -339,6 +353,28 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
               </div>
             </div>
           </div>
+          
+          <div className="spec-group">
+            <h4>Calculation Parameters</h4>
+            <div className="spec-list">
+              <div className="spec-item">
+                <span>Peak Sun Hours:</span>
+                <span>{pvCalculations.configUsed.peakSunHours} h/day</span>
+              </div>
+              <div className="spec-item">
+                <span>Production Ratio:</span>
+                <span>{pvCalculations.configUsed.productionRatio}</span>
+              </div>
+              <div className="spec-item">
+                <span>Panel Area:</span>
+                <span>{pvCalculations.configUsed.panelAreaM2} m²/panel</span>
+              </div>
+              <div className="spec-item">
+                <span>Total Roof Area:</span>
+                <span>{(pvCalculations.numberOfPanels * pvCalculations.configUsed.panelAreaM2).toFixed(0)} m²</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -348,13 +384,16 @@ const PVRecommendations = ({ analysis, electricityPrice = 0.80 }) => {
           <div className="recommendation">
             <strong>System Sizing:</strong>
             <p>Based on your consumption patterns, the optimal system should include {pvCalculations.numberOfPanels} solar panels 
-            with {pvCalculations.batteryCapacityKwh.toFixed(1)} kWh of battery storage to ensure reliable power supply.</p>
+            ({pvCalculations.configUsed.panelWattage}W each) with {pvCalculations.batteryCapacityKwh.toFixed(1)} kWh of battery 
+            storage to ensure reliable power supply. Total roof area required: ~{(pvCalculations.numberOfPanels * pvCalculations.configUsed.panelAreaM2).toFixed(0)} m².</p>
           </div>
           
           <div className="recommendation">
             <strong>Installation Considerations:</strong>
             <p>Ensure optimal panel orientation (south-facing, 30-45° tilt for maximum efficiency). 
-            Consider shading analysis and local building codes. Reserve space for future system expansion.</p>
+            Consider shading analysis and local building codes. Reserve space for future system expansion.
+            Based on E.ON data, with {pvCalculations.configUsed.peakSunHours} peak sun hours/day in Romania, 
+            your system should produce approximately {pvCalculations.annualEnergyProduction.toFixed(0)} kWh annually.</p>
           </div>
           
           <div className="recommendation">
