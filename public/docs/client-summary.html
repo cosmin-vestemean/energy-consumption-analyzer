@@ -264,12 +264,15 @@
 <p>Based on your consumption, the system calculates:</p>
 <ul>
 <li><strong>Required Solar Panel Capacity</strong> (in kW)</li>
-<li><strong>Number of Solar Panels</strong> needed (400W panels)</li>
-<li><strong>Battery Storage Size</strong> (for 2 days of backup power)</li>
+<li><strong>Number of Solar Panels</strong> needed (default: 415W panels, configurable 250-700W)</li>
+<li><strong>Battery Storage Size</strong> (for backup power, configurable autonomy days)</li>
 <li><strong>Inverter Size</strong> (to handle peak loads)</li>
 <li><strong>Estimated Costs</strong> (equipment + installation)</li>
 <li><strong>Expected Savings</strong> and payback period</li>
 </ul>
+<blockquote>
+<p><strong>v2.0 Update:</strong> All parameters are now configurable! See the PV Configuration Panel in the app for customization options based on <a href="https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html" target="_blank">E.ON Romania data</a>.</p>
+</blockquote>
 <hr>
 <h2>Key Formulas Explained (in Plain English)</h2>
 <h3>Solar Panel Sizing</h3>
@@ -317,12 +320,13 @@ The 1.2 factor (20% extra) handles surge loads
 </ul>
 <h3>Cost Calculations</h3>
 <p><strong>How much will the system cost?</strong></p>
-<pre><code>Equipment Costs:
-- Solar panels: Number of panels × 400W × €0.80/watt
-- Battery: Capacity in kWh × €400/kWh
-- Inverter: Size in kW × €300/kW
+<pre><code>Equipment Costs (using configurable parameters):
+- Solar panels: Number of panels × Panel Wattage × Price per Watt
+  (Default: 415W panels @ configurable RON/watt)
+- Battery: Capacity in kWh × Battery Cost per kWh (configurable)
+- Inverter: Size in kW × Inverter Cost per kW (configurable)
 
-Total Cost = Equipment Cost × 1.3
+Total Cost = Equipment Cost × Installation Multiplier (default: 1.3)
 (The 1.3 adds 30% for installation, wiring, mounting, etc.)
 </code></pre>
 <p><strong>Example System Cost:</strong></p>
@@ -485,12 +489,12 @@ Lower variation allows for more precise system sizing and better efficiency.</p>
 </ol>
 <hr>
 <h2>Questions &amp; Answers</h2>
-<h3>Q: Why 400W panels?</h3>
-<p><strong>A:</strong> This is the current industry standard for residential installations. Actual installations may use 350-450W panels.</p>
+<h3>Q: What panel sizes can I use?</h3>
+<p><strong>A (v2.0):</strong> The system now supports configurable panel sizes from 250W to 700W. The default is 415W based on <a href="https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html" target="_blank">E.ON Romania data</a>, but you can adjust this in the PV Configuration Panel to match your specific panels.</p>
 <h3>Q: Why 4.5 peak sun hours?</h3>
-<p><strong>A:</strong> This is a conservative average for Europe. Actual values range from 3-6 hours depending on location.</p>
-<h3>Q: Can I use 300W panels instead?</h3>
-<p><strong>A:</strong> Yes, you&#39;ll need proportionally more panels: multiply the panel count by (400/300) = 1.33.</p>
+<p><strong>A:</strong> This is a conservative average for Romania and Europe. The value is configurable (range: 3.0-6.0 hours) to match your specific location's solar irradiation data.</p>
+<h3>Q: Can I customize all the parameters?</h3>
+<p><strong>A:</strong> Yes! Version 2.0 introduces a complete parametrization system with 16 configurable parameters including panel wattage, efficiency, battery specs, costs, and more. See the PV Configuration Panel in the app or read PV_PARAMETRIZATION_GUIDE.md for details.</p>
 <h3>Q: What about government incentives?</h3>
 <p><strong>A:</strong> These vary by country/region and are not included. Check local programs for rebates or tax credits.</p>
 <h3>Q: How accurate are the cost estimates?</h3>

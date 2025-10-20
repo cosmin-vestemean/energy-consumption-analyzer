@@ -418,10 +418,12 @@ Formula: N_panels = ⌈(P_pv × 1000) / P_panel⌉
 Where:
   ⌈ ⌉ = ceiling function (round up)
   P_pv = PV array size in kW
-  P_panel = individual panel wattage (400W)
+  P_panel = individual panel wattage (default: 415W, configurable 250-700W)
 
-Example:
-  N_panels = ⌈(7.84 × 1000) / 400⌉ = ⌈19.6⌉ = 20 panels
+Example (using default 415W):
+  N_panels = ⌈(7.84 × 1000) / 415⌉ = ⌈18.9⌉ = 19 panels
+  
+Note: With older 400W panels: ⌈(7.84 × 1000) / 400⌉ = 20 panels
 </code></pre>
 <h3>2. Battery Storage Sizing</h3>
 <pre><code>Battery Capacity (kWh) = (Daily Energy Need × Autonomy Days) / Battery Efficiency
