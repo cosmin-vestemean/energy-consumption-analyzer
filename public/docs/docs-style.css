@@ -369,3 +369,61 @@ a:hover {
         padding: 10px 12px;
     }
 }
+
+/* PV Configuration Parameter Cards */
+.parameter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.parameter-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 16px;
+    transition: all 0.2s ease;
+}
+
+.parameter-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-color: #5a67d8;
+}
+
+.param-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    gap: 12px;
+}
+
+.param-name {
+    font-weight: 600;
+    color: #1a202c;
+    font-size: 0.95em;
+    flex: 0 0 auto;
+}
+
+.param-value {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #5a67d8;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.param-description {
+    font-size: 0.85em;
+    color: #718096;
+    line-height: 1.5;
+    margin-top: 8px;
+    border-top: 1px solid #f7fafc;
+    padding-top: 8px;
+}
+
+.param-description strong {
+    color: #e53e3e;
+}
+
