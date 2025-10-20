@@ -15,8 +15,10 @@ import {
   Cell
 } from 'recharts';
 import './EnergyDashboard.css';
+import { useLanguage } from '../i18n/LanguageContext';
 
 const EnergyDashboard = ({ data, analysis }) => {
+  const { t } = useLanguage();
   if (!data || !analysis) return null;
 
   // Calculate data range information
@@ -93,56 +95,56 @@ const EnergyDashboard = ({ data, analysis }) => {
   // Custom tooltip formatters
   const formatTooltip = (value, name) => [
     `${parseFloat(value).toFixed(3)} kWh`,
-    name === 'average' ? 'Average' : 
-    name === 'maximum' ? 'Maximum' : 
-    name === 'minimum' ? 'Minimum' : 
-    name === 'total' ? 'Total' : name
+    name === 'average' ? t('average') : 
+    name === 'maximum' ? t('maximum') : 
+    name === 'minimum' ? t('minimum') : 
+    name === 'total' ? t('total') : name
   ];
 
   return (
     <div className="energy-dashboard">
-      <h2>📊 Energy Consumption Dashboard</h2>
+      <h2>📊 {t('dashboardTitle')}</h2>
       
       {dataRange && (
         <div className="data-info-banner">
-          <strong>📅 Data Coverage:</strong> {dataRange.totalReadings} readings 
-          ({dataRange.uniqueDays} days, {dataRange.uniqueMonths} months) 
-          - {dataRange.coverage}% of full year
+          <strong>📅 {t('dataCoverage')}:</strong> {dataRange.totalReadings} {t('readings')} 
+          ({dataRange.uniqueDays} {t('days')}, {dataRange.uniqueMonths} {t('months')}) 
+          - {dataRange.coverage}% {t('fullYear')}
           {dataRange.minDate && dataRange.maxDate && (
-            <> | Period: {dataRange.minDate.toLocaleDateString()} - {dataRange.maxDate.toLocaleDateString()}</>
+            <> | {t('period')}: {dataRange.minDate.toLocaleDateString()} - {dataRange.maxDate.toLocaleDateString()}</>
           )}
         </div>
       )}
       
       <div className="stats-cards">
         <div className="stat-card">
-          <h3>Total Consumption</h3>
+          <h3>{t('totalConsumption')}</h3>
           <p className="stat-value">{analysis.totalConsumption.toFixed(2)} kWh</p>
-          <small>{analysis.dataPoints} data points</small>
+          <small>{analysis.dataPoints} {t('dataPoints')}</small>
         </div>
         
         <div className="stat-card">
-          <h3>Average Hourly</h3>
+          <h3>{t('averageHourly')}</h3>
           <p className="stat-value">{analysis.avgConsumption.toFixed(3)} kWh</p>
-          <small>Per hour</small>
+          <small>{t('perHour')}</small>
         </div>
         
         <div className="stat-card">
-          <h3>Peak Consumption</h3>
+          <h3>{t('peakConsumption')}</h3>
           <p className="stat-value">{analysis.maxConsumption.toFixed(3)} kWh</p>
-          <small>Maximum recorded</small>
+          <small>{t('maximumRecorded')}</small>
         </div>
         
         <div className="stat-card">
-          <h3>Daily Average</h3>
+          <h3>{t('dailyAverage')}</h3>
           <p className="stat-value">{analysis.avgDailyConsumption.toFixed(2)} kWh</p>
-          <small>Per day</small>
+          <small>{t('perDay')}</small>
         </div>
       </div>
 
       <div className="charts-grid">
         <div className="chart-container">
-          <h3>Hourly Consumption Pattern</h3>
+          <h3>{t('hourlyPattern')}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={hourlyData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -177,13 +179,13 @@ const EnergyDashboard = ({ data, analysis }) => {
         </div>
 
         <div className="chart-container">
-          <h3>Daily Total Consumption</h3>
+          <h3>{t('dailyConsumption')}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={dailyData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="day" />
               <YAxis 
-                label={{ value: 'Total (kWh)', angle: -90, position: 'insideLeft' }}
+                label={{ value: `${t('total')} (kWh)`, angle: -90, position: 'insideLeft' }}
               />
               <Tooltip formatter={formatTooltip} />
               <Bar dataKey="total" fill="#00C49F" />
@@ -192,7 +194,7 @@ const EnergyDashboard = ({ data, analysis }) => {
         </div>
 
         <div className="chart-container">
-          <h3>Peak Consumption Hours</h3>
+          <h3>{t('peakHours')}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
