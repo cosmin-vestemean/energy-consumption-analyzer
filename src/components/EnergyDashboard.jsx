@@ -101,75 +101,80 @@ const EnergyDashboard = ({ data, analysis }) => {
 
   return (
     <div className="energy-dashboard">
-      <h2>📊 Energy Consumption Dashboard</h2>
-      
-      {dataRange && (
-        <div className="data-info-banner">
-          <strong>📅 Data Coverage:</strong> {dataRange.totalReadings} readings 
-          ({dataRange.uniqueDays} days, {dataRange.uniqueMonths} months) 
-          - {dataRange.coverage}% of full year
-          {dataRange.minDate && dataRange.maxDate && (
-            <> | Period: {dataRange.minDate.toLocaleDateString()} - {dataRange.maxDate.toLocaleDateString()}</>
-          )}
-        </div>
-      )}
-      
-      <div className="stats-cards">
-        <div className="stat-card">
-          <h3>Total Consumption</h3>
-          <p className="stat-value">{analysis.totalConsumption.toFixed(2)} kWh</p>
-          <small>{analysis.dataPoints} data points</small>
-        </div>
+      <div className="dashboard-hero">
+        <h2>⚡ <strong>Energy Consumption</strong> Dashboard</h2>
         
-        <div className="stat-card">
-          <h3>Average Hourly</h3>
-          <p className="stat-value">{analysis.avgConsumption.toFixed(3)} kWh</p>
-          <small>Per hour</small>
-        </div>
-        
-        <div className="stat-card">
-          <h3>Peak Consumption</h3>
-          <p className="stat-value">{analysis.maxConsumption.toFixed(3)} kWh</p>
-          <small>Maximum recorded</small>
-        </div>
-        
-        <div className="stat-card">
-          <h3>Daily Average</h3>
-          <p className="stat-value">{analysis.avgDailyConsumption.toFixed(2)} kWh</p>
-          <small>Per day</small>
-        </div>
+        {dataRange && (
+          <div className="data-info-banner">
+            <strong>📅 Data Coverage:</strong> {dataRange.totalReadings} readings 
+            ({dataRange.uniqueDays} days, {dataRange.uniqueMonths} months) 
+            - {dataRange.coverage}% of full year
+            {dataRange.minDate && dataRange.maxDate && (
+              <> | Period: {dataRange.minDate.toLocaleDateString()} - {dataRange.maxDate.toLocaleDateString()}</>
+            )}
+          </div>
+        )}
       </div>
+      
+      <div className="dashboard-content">
+        <div className="stats-cards">
+          <div className="stat-card">
+            <h3>Total Consumption</h3>
+            <p className="stat-value">{analysis.totalConsumption.toFixed(2)}</p>
+            <small>{analysis.dataPoints} data points</small>
+          </div>
+          
+          <div className="stat-card">
+            <h3>Average Hourly</h3>
+            <p className="stat-value">{analysis.avgConsumption.toFixed(3)}</p>
+            <small>kWh per hour</small>
+          </div>
+          
+          <div className="stat-card">
+            <h3>Peak Consumption</h3>
+            <p className="stat-value">{analysis.maxConsumption.toFixed(3)}</p>
+            <small>kWh maximum recorded</small>
+          </div>
+          
+          <div className="stat-card">
+            <h3>Daily Average</h3>
+            <p className="stat-value">{analysis.avgDailyConsumption.toFixed(2)}</p>
+            <small>kWh per day</small>
+          </div>
+        </div>
 
-      <div className="charts-grid">
-        <div className="chart-container">
-          <h3>Hourly Consumption Pattern</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={hourlyData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis 
-                dataKey="hour" 
-                interval={1}
-                angle={-45}
-                textAnchor="end"
-                height={60}
-              />
-              <YAxis 
-                label={{ value: 'Consumption (kWh)', angle: -90, position: 'insideLeft' }}
-              />
-              <Tooltip formatter={formatTooltip} />
-              <Legend />
+        <div className="charts-grid">
+          <div className="chart-container">
+            <h3>Hourly Consumption Pattern</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={hourlyData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis 
+                  dataKey="hour" 
+                  interval={1}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
+                  stroke="#666"
+                />
+                <YAxis 
+                  label={{ value: 'Consumption (kWh)', angle: -90, position: 'insideLeft' }}
+                  stroke="#666"
+                />
+                <Tooltip formatter={formatTooltip} />
+                <Legend />
               <Line 
                 type="monotone" 
                 dataKey="average" 
-                stroke="#0088FE" 
-                strokeWidth={2}
-                dot={{ r: 3 }}
+                stroke="#667eea" 
+                strokeWidth={3}
+                dot={{ r: 3, fill: "#667eea" }}
               />
               <Line 
                 type="monotone" 
                 dataKey="maximum" 
-                stroke="#FF8042" 
-                strokeWidth={1}
+                stroke="#764ba2" 
+                strokeWidth={2}
                 strokeDasharray="5 5"
               />
             </LineChart>
@@ -180,13 +185,14 @@ const EnergyDashboard = ({ data, analysis }) => {
           <h3>Daily Total Consumption</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={dailyData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="day" stroke="#666" />
               <YAxis 
                 label={{ value: 'Total (kWh)', angle: -90, position: 'insideLeft' }}
+                stroke="#666"
               />
               <Tooltip formatter={formatTooltip} />
-              <Bar dataKey="total" fill="#00C49F" />
+              <Bar dataKey="total" fill="#667eea" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -218,19 +224,21 @@ const EnergyDashboard = ({ data, analysis }) => {
           <h3>Consumption Distribution (24h)</h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={hourlyData}>
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
               <XAxis 
                 dataKey="hour" 
                 interval={1}
                 angle={-45}
                 textAnchor="end"
                 height={60}
+                stroke="#666"
               />
               <YAxis 
                 label={{ value: 'Average (kWh)', angle: -90, position: 'insideLeft' }}
+                stroke="#666"
               />
               <Tooltip formatter={formatTooltip} />
-              <Bar dataKey="average" fill="#FFBB28" />
+              <Bar dataKey="average" fill="#764ba2" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
