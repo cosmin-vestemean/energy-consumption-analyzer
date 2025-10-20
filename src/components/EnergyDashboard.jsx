@@ -23,12 +23,26 @@ const EnergyDashboard = ({ data, analysis }) => {
   const dataRange = React.useMemo(() => {
     if (data.length === 0) return null;
     
-    const dates = data.map(row => row.timestamp).filter(d => d);
-    const minDate = new Date(Math.min(...dates));
-    const maxDate = new Date(Math.max(...dates));
+    // Get unique day-month combinations
+    const uniqueDaySet = new Set(data.map(row => `${row.luna}-${row.zi}`));
+    const uniqueDays = uniqueDaySet.size;
     
-    const uniqueDays = new Set(data.map(row => `${row.luna}-${row.zi}`)).size;
-    const uniqueMonths = new Set(data.map(row => row.luna)).size;
+    // Get unique months
+    const uniqueMonthSet = new Set(data.map(row => row.luna));
+    const uniqueMonths = uniqueMonthSet.size;
+    
+    // Calculate date range from actual luna/zi/an values
+    const sortedData = [...data].sort((a, b) => {
+      const dateA = new Date(a.an, a.luna - 1, a.zi, a.ora);
+      const dateB = new Date(b.an, b.luna - 1, b.zi, b.ora);
+      return dateA - dateB;
+    });
+    
+    const firstRow = sortedData[0];
+    const lastRow = sortedData[sortedData.length - 1];
+    
+    const minDate = new Date(firstRow.an, firstRow.luna - 1, firstRow.zi);
+    const maxDate = new Date(lastRow.an, lastRow.luna - 1, lastRow.zi);
     
     return {
       minDate,
