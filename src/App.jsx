@@ -4,8 +4,11 @@ import FileUpload from './components/FileUpload';
 import EnergyDashboard from './components/EnergyDashboard';
 import ConsumptionAnalysis from './components/ConsumptionAnalysis';
 import PVRecommendations from './components/PVRecommendations';
+import LanguageSwitcher from './components/LanguageSwitcher';
+import { useLanguage } from './i18n/LanguageContext';
 
 function App() {
+  const { t } = useLanguage();
   const [energyData, setEnergyData] = useState([]);
   const [analysisResults, setAnalysisResults] = useState(null);
   // Electricity price in RON/kWh - default to typical Romanian household rate
@@ -90,12 +93,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>⚡ Electric Consumption Analyzer</h1>
-        <p>Analyze energy consumption data to design optimal photovoltaic systems</p>
-        <button className="help-button" onClick={openDocumentation}>
-          <span className="icon">📚</span>
-          <span>Documentation</span>
-        </button>
+        <div className="header-content">
+          <div className="header-text">
+            <h1>⚡ {t('appTitle')}</h1>
+            <p>{t('appSubtitle')}</p>
+          </div>
+          <div className="header-actions">
+            <LanguageSwitcher />
+            <button className="help-button" onClick={openDocumentation}>
+              <span className="icon">📚</span>
+              <span>{t('helpButton')}</span>
+            </button>
+          </div>
+        </div>
       </header>
       
       <main className="App-main">
@@ -104,10 +114,10 @@ function App() {
             <FileUpload onDataLoaded={handleDataLoaded} />
             
             <div className="price-config-section">
-              <h3>⚙️ Configurare Preț Energie</h3>
+              <h3>⚙️ {t('priceTitle')}</h3>
               <div className="price-input-container">
                 <label htmlFor="electricity-price">
-                  Preț energie electrică (RON/kWh):
+                  {t('priceLabel')}:
                 </label>
                 <input
                   id="electricity-price"
@@ -121,27 +131,27 @@ function App() {
                 <span className="price-display">{electricityPrice.toFixed(2)} RON/kWh</span>
               </div>
               <div className="price-info">
-                <p><strong>Prețuri de referință (2025):</strong></p>
+                <p><strong>{t('priceInfoTitle')}</strong></p>
+                <p>{t('priceInfoDesc')}</p>
                 <ul>
-                  <li>0.68 RON/kWh - consum &lt; 100 kWh/lună (plafonat)</li>
-                  <li>0.80 RON/kWh - consum 100-255 kWh/lună (plafonat, implicit)</li>
-                  <li>1.30 RON/kWh - consum &gt; 300 kWh/lună</li>
-                  <li>0.773 RON/kWh - PPC Simplu Online</li>
-                  <li>1.036 RON/kWh - Hidroelectrica</li>
+                  <li>{t('priceInfo1')}</li>
+                  <li>{t('priceInfo2')}</li>
+                  <li>{t('priceInfo3')}</li>
+                  <li>{t('priceInfo4')}</li>
                 </ul>
-                <small>Conform OUG 6/2025 și oferte piață liberă (august 2025)</small>
+                <small>{t('priceInfoNote')}</small>
               </div>
             </div>
           </div>
         ) : (
           <div className="analysis-section">
             <div className="price-display-header">
-              <span>Preț energie: <strong>{electricityPrice.toFixed(2)} RON/kWh</strong></span>
+              <span>{t('priceDisplay')}: <strong>{electricityPrice.toFixed(2)} RON/kWh</strong></span>
               <button 
                 className="change-price-btn"
                 onClick={() => {
                   const newPrice = prompt(
-                    `Introduceți noul preț al energiei (RON/kWh):\n\nPrețuri de referință:\n• 0.68 RON/kWh - consum < 100 kWh/lună\n• 0.80 RON/kWh - consum 100-255 kWh/lună (implicit)\n• 1.30 RON/kWh - consum > 300 kWh/lună`,
+                    t('priceLabel'),
                     electricityPrice
                   );
                   if (newPrice !== null && !isNaN(parseFloat(newPrice))) {
@@ -149,7 +159,7 @@ function App() {
                   }
                 }}
               >
-                Modifică Preț
+                {t('changePrice')}
               </button>
             </div>
             <EnergyDashboard data={energyData} analysis={analysisResults} />
@@ -164,7 +174,7 @@ function App() {
                   setAnalysisResults(null);
                 }}
               >
-                Load New File
+                {t('resetButton')}
               </button>
             </div>
           </div>
