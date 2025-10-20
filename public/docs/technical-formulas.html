@@ -174,7 +174,7 @@ Interpretation:
 <h2>PV System Sizing Calculations</h2>
 <h3>Assumptions &amp; Constants</h3>
 <pre><code>System Efficiency (η_sys) = 0.85 (85%)
-Panel Wattage (P_panel) = 400 W
+Panel Wattage (P_panel) = 415 W
 Peak Sun Hours (PSH) = 4.5 hours/day
 Autonomy Days (D_auto) = 2 days
 Battery Efficiency (η_bat) = 0.9 (90%)
@@ -204,10 +204,10 @@ Formula: N_panels = ⌈(P_pv × 1000) / P_panel⌉
 Where:
   ⌈ ⌉ = ceiling function (round up)
   P_pv = PV array size in kW
-  P_panel = individual panel wattage (400W)
+  P_panel = individual panel wattage (415W)
 
 Example:
-  N_panels = ⌈(7.84 × 1000) / 400⌉ = ⌈19.6⌉ = 20 panels
+  N_panels = ⌈(7.84 × 1000) / 415⌉ = ⌈18.9⌉ = 19 panels
 </code></pre>
 <h3>2. Battery Storage Sizing</h3>
 <pre><code>Battery Capacity (kWh) = (Daily Energy Need × Autonomy Days) / Battery Efficiency
@@ -258,13 +258,13 @@ Where:
 <h3>Cost Components</h3>
 <h4>Equipment Costs</h4>
 <pre><code>Panel Cost = Number of Panels × Panel Wattage × Cost per Watt
-           = N_panels × P_panel × RON 0.80/W
+           = N_panels × P_panel × RON 3.98/W
 
 Battery Cost = Battery Capacity × Cost per kWh
-             = C_bat × RON 400/kWh
+             = C_bat × RON 1,988/kWh
 
 Inverter Cost = Inverter Size × Cost per kW
-              = P_inv × RON 300/kW
+              = P_inv × RON 1,491/kW
 </code></pre>
 <h4>Total System Cost</h4>
 <pre><code>Equipment Cost = Panel Cost + Battery Cost + Inverter Cost
@@ -280,10 +280,10 @@ Where:
 <h4>Annual Savings</h4>
 <pre><code>Annual Savings = Daily Energy × 365 × Electricity Rate × Energy Offset
 
-Formula: S_annual = E_daily × 365 × RON 0.25/kWh × (Offset/100)
+Formula: S_annual = E_daily × 365 × RON 0.80/kWh × (Offset/100)
 
 Assumptions:
-  Electricity Rate = RON 0.25/kWh (configurable parameter - default Romanian rate)
+  Electricity Rate = RON 0.80/kWh (configurable parameter - default Romanian rate)
 </code></pre>
 <h4>Payback Period</h4>
 <pre><code>Payback Period (years) = Total System Cost / Annual Savings
