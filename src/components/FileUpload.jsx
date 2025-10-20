@@ -20,6 +20,18 @@ const FileUpload = ({ onDataLoaded }) => {
         // Convert to JSON
         const jsonData = XLSX.utils.sheet_to_json(worksheet);
         
+        // Try to extract year from sheet name (e.g., "2025" or "Sheet1 (2025)")
+        let dataYear = new Date().getFullYear(); // Default to current year
+        const yearMatch = worksheetName.match(/\((\d{4})\)|^(\d{4})$/);
+        if (yearMatch) {
+          const extractedYear = parseInt(yearMatch[1] || yearMatch[2]);
+          if (extractedYear >= 2000 && extractedYear <= 2100) {
+            dataYear = extractedYear;
+          }
+        }
+        
+        console.log(`Using year ${dataYear} from sheet "${worksheetName}"`);
+        
         // Process and validate the data
         const processedData = jsonData.map((row, index) => {
           // Handle different possible column names
@@ -27,12 +39,14 @@ const FileUpload = ({ onDataLoaded }) => {
           const ora = row['ora'] || row['hour'];
           const zi = row['zi'] || row['day'];
           const luna = row['luna'] || row['month'];
+          const an = row['an'] || row['year'] || row['anul'];
           
           // Parse values
           const energieValue = energie !== undefined && energie !== null ? parseFloat(energie) : null;
           const oraValue = ora !== undefined && ora !== null ? parseInt(ora) : null;
           const ziValue = zi !== undefined && zi !== null ? parseInt(zi) : null;
           const lunaValue = luna !== undefined && luna !== null ? parseInt(luna) : null;
+          const anValue = an !== undefined && an !== null ? parseInt(an) : dataYear;
           
           // Skip rows with missing required fields
           if (energieValue === null || oraValue === null || ziValue === null || lunaValue === null) {
@@ -43,7 +57,8 @@ const FileUpload = ({ onDataLoaded }) => {
           if (isNaN(energieValue) || energieValue < 0 || 
               oraValue < 0 || oraValue > 23 ||
               ziValue < 1 || ziValue > 31 ||
-              lunaValue < 1 || lunaValue > 12) {
+              lunaValue < 1 || lunaValue > 12 ||
+              anValue < 2000 || anValue > 2100) {
             return null;
           }
           
@@ -53,7 +68,8 @@ const FileUpload = ({ onDataLoaded }) => {
             ora: oraValue,
             zi: ziValue,
             luna: lunaValue,
-            timestamp: new Date(2024, lunaValue - 1, ziValue, oraValue)
+            an: anValue,
+            timestamp: new Date(anValue, lunaValue - 1, ziValue, oraValue)
           };
         }).filter(row => row !== null); // Filter out invalid/incomplete rows only
         
@@ -103,7 +119,7 @@ const FileUpload = ({ onDataLoaded }) => {
         <h3>Upload Excel File</h3>
         <p>Drop your Excel file here or click to browse</p>
         <p className="file-info">
-          Expected format: energie (kwh) | ora | zi | luna
+          Expected format: energie (kwh) | ora | zi | luna | an (optional)
         </p>
         
         <input
@@ -127,6 +143,7 @@ const FileUpload = ({ onDataLoaded }) => {
               <th>ora</th>
               <th>zi</th>
               <th>luna</th>
+              <th>an (optional)</th>
             </tr>
           </thead>
           <tbody>
@@ -135,14 +152,17 @@ const FileUpload = ({ onDataLoaded }) => {
               <td>0</td>
               <td>1</td>
               <td>6</td>
+              <td>2025</td>
             </tr>
             <tr>
               <td>1.79875</td>
               <td>1</td>
               <td>1</td>
               <td>6</td>
+              <td>2025</td>
             </tr>
             <tr>
+              <td>...</td>
               <td>...</td>
               <td>...</td>
               <td>...</td>
@@ -150,6 +170,9 @@ const FileUpload = ({ onDataLoaded }) => {
             </tr>
           </tbody>
         </table>
+        <p className="format-note">
+          <small>💡 Tip: If year column is not present, the year will be extracted from the sheet name (e.g., "2025") or current year will be used.</small>
+        </p>
       </div>
     </div>
   );
