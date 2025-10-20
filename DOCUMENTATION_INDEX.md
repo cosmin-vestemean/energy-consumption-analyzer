@@ -36,6 +36,24 @@ This package contains complete documentation for the **Electric Consumption Anal
    - How data is read and cleaned
    - Performance optimizations
 
+5. **PV_PARAMETRIZATION_GUIDE.md** ⚙️ NEW!
+   - Sistem complet parametrizabil
+   - 16 parametri configurabili
+   - Date validate E.ON România
+   - 10 scenarii predefinite
+   - Ghid pas cu pas
+
+### HTML Documentation (Interactive)
+
+Access via `/docs/` route in the application:
+
+- **index.html** - Documentation hub
+- **client-summary.html** - Client-friendly guide
+- **quick-reference.html** - Quick lookup
+- **technical-formulas.html** - Complete formulas
+- **data-processing.html** - Data pipeline
+- **pv-configuration.html** ⚙️ NEW! - PV System Configuration Guide
+
 ---
 
 ## 🎯 Application Overview
@@ -107,15 +125,32 @@ Payback = Total Cost ÷ (Daily kWh × 365 × €0.25/kWh)
 
 All calculations are based on industry-standard assumptions:
 
-| Parameter | Value | Rationale |
-|-----------|-------|-----------|
-| System Efficiency | 85% | Accounts for inverter, wiring, temperature losses |
-| Peak Sun Hours | 4.5 h/day | Conservative European average |
-| Panel Wattage | 400 W | Current standard residential panel |
-| Battery Efficiency | 90% | Lithium-ion round-trip efficiency |
-| Electricity Rate | €0.25/kWh | European residential average |
-| Autonomy Days | 2 days | Backup for cloudy weather |
-| System Lifetime | 25 years | Standard warranty period |
+**NOTE:** Starting with version 2.0, all these parameters are now fully configurable through the PV System Configuration interface! See **PV_PARAMETRIZATION_GUIDE.md** for details.
+
+| Parameter | Default Value | Configurable Range | Rationale |
+|-----------|---------------|-------------------|-----------|
+| System Efficiency | 85% | 70-95% | Accounts for inverter, wiring, temperature losses |
+| Peak Sun Hours | 4.5 h/day | 3.0-7.0 h/day | Conservative average for Romania (E.ON data) |
+| Panel Wattage | 415 W | 250-600 W | Current standard residential panel (E.ON standard) |
+| Battery Efficiency | 90% | 70-98% | Lithium-ion round-trip efficiency |
+| Electricity Rate | 0.80 RON/kWh | 0.50-2.00 RON/kWh | Romanian residential average |
+| Autonomy Days | 2 days | 0.5-5 days | Backup for cloudy weather |
+| System Lifetime | 25 years | Fixed | Standard warranty period |
+| Installation Cost | +30% | 20-50% | Labor, wiring, permits |
+| Production Ratio | 1.3 | 1.0-2.0 | E.ON Romania: 1.3-1.6 |
+
+### 🆕 Version 2.0 - Parametrizare Completă
+
+Aplicația include acum un sistem complet parametrizabil care permite:
+
+- ✅ **16 parametri configurabili** pentru calcule precise
+- ✅ **Date validate E.ON România** ca valori implicite
+- ✅ **10 scenarii predefinite** pentru diferite situații
+- ✅ **Validare automată** a valorilor introduse
+- ✅ **Actualizare în timp real** a tuturor calculelor
+- ✅ **Tabel de referință E.ON** integrat în interfață
+
+Pentru detalii complete, consultați **PV_PARAMETRIZATION_GUIDE.md** sau accesați `/docs/pv-configuration.html` în aplicație.
 
 ---
 

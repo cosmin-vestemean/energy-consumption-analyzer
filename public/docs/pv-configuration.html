@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PV System Configuration - Electric Consumption Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 20px;
+            transition: background 0.3s;
+        }
+
+        .back-button:hover {
+            background: #764ba2;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f5f7ff;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .parameter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .parameter-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s;
+        }
+
+        .parameter-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .parameter-card .param-name {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .parameter-card .param-value {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .parameter-card .param-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .feature-list li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .eon-badge {
+            background: linear-gradient(135deg, #00C49F 0%, #0088FE 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .back-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/docs/index.html" class="back-button">← Back to Documentation Hub</a>
+        
+        <h1>⚙️ Sistem Parametrizabil PV</h1>
+        <p class="subtitle">Configurare completă a parametrilor pentru recomandări panouri fotovoltaice</p>
+
+        <div class="highlight-box">
+            <h3>🎯 Ce este sistemul parametrizabil?</h3>
+            <p>Sistemul parametrizabil permite personalizarea completă a tuturor valorilor folosite în calculele pentru dimensionarea sistemelor fotovoltaice. În loc de valori fixe (hardcoded), acum poți ajusta parametrii pentru a reflecta:</p>
+            <ul class="feature-list">
+                <li>Prețurile actuale de pe piață</li>
+                <li>Specificațiile echipamentelor specifice</li>
+                <li>Condițiile regionale (ore de soare, iradiere)</li>
+                <li>Cerințele tale personale de autonomie</li>
+                <li>Diferite scenarii de investiție</li>
+            </ul>
+        </div>
+
+        <h2>📊 Date de Referință E.ON România</h2>
+        
+        <p>Toate valorile implicite sunt bazate pe date validate de la E.ON România, extras din articolul oficial: <a href="https://www.eon.ro/statie-energie/ghid-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania" target="_blank">"Câte panouri fotovoltaice sunt necesare unei case din România?"</a></p>
+
+        <div class="info-box">
+            <h4>📌 Valori Cheie pentru România</h4>
+            <ul>
+                <li><strong>Consum mediu anual:</strong> 2,500 kWh/an pentru o gospodărie</li>
+                <li><strong>Putere panou standard:</strong> 415W (interval piață: 250-550W)</li>
+                <li><strong>Ore solare maxime:</strong> 4.5 ore/zi (medie România)</li>
+                <li><strong>Raport de producție:</strong> 1.3-1.6 (funcție de locație)</li>
+                <li><strong>Suprafață panou:</strong> ~2 m² per panou</li>
+            </ul>
+        </div>
+
+        <h3>Tabel Sisteme Standard E.ON <span class="eon-badge">Sursă Oficială</span></h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Sistem (kW)</th>
+                    <th>Număr Panouri</th>
+                    <th>Suprafață (m²)</th>
+                    <th>Producție Anuală (kWh)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>3 kW</td><td>7 panouri</td><td>15 m²</td><td>3,800 kWh</td></tr>
+                <tr><td>5 kW</td><td>12 panouri</td><td>26 m²</td><td>6,300 kWh</td></tr>
+                <tr><td>6 kW</td><td>14 panouri</td><td>30 m²</td><td>7,600 kWh</td></tr>
+                <tr><td>8 kW</td><td>18 panouri</td><td>40 m²</td><td>10,200 kWh</td></tr>
+                <tr><td>10 kW</td><td>23 panouri</td><td>50 m²</td><td>12,700 kWh</td></tr>
+                <tr><td>12 kW</td><td>27 panouri</td><td>60 m²</td><td>15,300 kWh</td></tr>
+                <tr><td>15 kW</td><td>34 panouri</td><td>75 m²</td><td>19,100 kWh</td></tr>
+                <tr><td>20 kW</td><td>45 panouri</td><td>99 m²</td><td>25,500 kWh</td></tr>
+            </tbody>
+        </table>
+
+        <h2>🔧 Parametri Configurabili</h2>
+
+        <h3>☀️ Panouri Solare (6 parametri)</h3>
+        
+        <div class="parameter-grid">
+            <div class="parameter-card">
+                <div class="param-name">Putere Panou</div>
+                <div class="param-value">415W</div>
+                <div class="param-description">Interval: 250-550W<br>Standard E.ON: 415W</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Eficiență Sistem</div>
+                <div class="param-value">85%</div>
+                <div class="param-description">Eficiența totală a sistemului fotovoltaic</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Ore Solare Maxime/Zi</div>
+                <div class="param-value">4.5 ore</div>
+                <div class="param-description">Medie România<br>Nord: 4.0h, Sud: 5.2h</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Raport de Producție</div>
+                <div class="param-value">1.3</div>
+                <div class="param-description">Interval E.ON: 1.3-1.6<br>Funcție de locație geografică</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Cost Panou</div>
+                <div class="param-value">3.98 RON/W</div>
+                <div class="param-description">~0.8 EUR/W × 4.97<br>Actualizați cu prețurile curente</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Suprafață Panou</div>
+                <div class="param-value">2 m²</div>
+                <div class="param-description">Estimare E.ON per panou</div>
+            </div>
+        </div>
+
+        <h3>🔋 Baterii (4 parametri)</h3>
+        
+        <div class="parameter-grid">
+            <div class="parameter-card">
+                <div class="param-name">Zile Autonomie</div>
+                <div class="param-value">2 zile</div>
+                <div class="param-description">Zilele de rezervă energetică<br>Grid-tied: 0.5-1, Off-grid: 3-4</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Eficiență Baterie</div>
+                <div class="param-value">90%</div>
+                <div class="param-description">Eficiență round-trip<br>Lithium-ion standard: 88-95%</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Cicli de Viață</div>
+                <div class="param-value">5,000 cicli</div>
+                <div class="param-description">Nr. încărcări/descărcări<br>Premium: 6,000-10,000</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Cost Baterie</div>
+                <div class="param-value">1,988 RON/kWh</div>
+                <div class="param-description">~400 EUR/kWh × 4.97<br>Actualizați cu prețurile curente</div>
+            </div>
+        </div>
+
+        <h3>⚡ Invertor (3 parametri)</h3>
+        
+        <div class="parameter-grid">
+            <div class="parameter-card">
+                <div class="param-name">Marjă Siguranță</div>
+                <div class="param-value">20%</div>
+                <div class="param-description">1.2× sarcina maximă<br>Off-grid: 40-50%</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Cost Invertor</div>
+                <div class="param-value">1,491 RON/kW</div>
+                <div class="param-description">~300 EUR/kW × 4.97<br>Actualizați cu prețurile curente</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Eficiență Invertor</div>
+                <div class="param-value">97%</div>
+                <div class="param-description">Conversie CC → CA<br>Premium: 98%+</div>
+            </div>
+        </div>
+
+        <h3>💰 Parametri Financiari (3 parametri)</h3>
+        
+        <div class="parameter-grid">
+            <div class="parameter-card">
+                <div class="param-name">Preț Electricitate</div>
+                <div class="param-value">0.80 RON/kWh</div>
+                <div class="param-description"><strong>Important!</strong> Actualizați cu prețul dvs. real</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Cost Instalare</div>
+                <div class="param-value">30%</div>
+                <div class="param-description">Peste costul echipamentului<br>Montaj, cablare, permise</div>
+            </div>
+            
+            <div class="parameter-card">
+                <div class="param-name">Curs EUR → RON</div>
+                <div class="param-value">4.97</div>
+                <div class="param-description">Actualizați periodic</div>
+            </div>
+        </div>
+
+        <div class="success-box">
+            <h4>✅ Total: 16 Parametri Configurabili</h4>
+            <p>Toate acestea pot fi ajustate în timp real prin interfața aplicației!</p>
+        </div>
+
+        <h2>🚀 Cum să Folosiți Configurarea</h2>
+
+        <h3>Pași pentru Configurare</h3>
+
+        <p><span class="step-number">1</span><strong>Deschideți Panoul de Configurare</strong></p>
+        <ul>
+            <li>Navigați la secțiunea "Photovoltaic System Recommendations"</li>
+            <li>Căutați panoul mov "⚙️ Configurare Parametri Sistem Fotovoltaic"</li>
+            <li>Click pe butonul "Afișează Configurare Avansată"</li>
+        </ul>
+
+        <p><span class="step-number">2</span><strong>Modificați Parametrii Doriți</strong></p>
+        <ul>
+            <li><strong>Panouri Solare:</strong> Ajustați puterea, eficiența, orele solare</li>
+            <li><strong>Baterii:</strong> Configurați autonomia și costurile</li>
+            <li><strong>Invertor:</strong> Setați marja de siguranță și prețurile</li>
+            <li><strong>Financiar:</strong> <strong>Important!</strong> Actualizați prețul electricității</li>
+        </ul>
+
+        <p><span class="step-number">3</span><strong>Validare Automată</strong></p>
+        <ul>
+            <li>Sistemul validează valorile în timp real</li>
+            <li>Veți vedea avertismente dacă valorile sunt în afara intervalelor normale</li>
+            <li>De exemplu: panou 150W va genera avertisment (sub 250W standard)</li>
+        </ul>
+
+        <p><span class="step-number">4</span><strong>Aplicați Configurația</strong></p>
+        <ul>
+            <li>Click "✓ Aplică Configurația" pentru a recalcula recomandările</li>
+            <li>Toate graficele și calculele se actualizează instantaneu</li>
+            <li>Veți vedea noile valori în toate secțiunile</li>
+        </ul>
+
+        <p><span class="step-number">5</span><strong>Revizuiți Rezultatele</strong></p>
+        <ul>
+            <li>Numărul de panouri necesare</li>
+            <li>Capacitatea bateriei recalculată</li>
+            <li>Costuri totale actualizate</li>
+            <li>Noua perioadă de recuperare a investiției</li>
+            <li>Economii anuale estimate</li>
+        </ul>
+
+        <h2>💡 Cazuri de Utilizare</h2>
+
+        <h3>1. Actualizare Prețuri Piață</h3>
+        <div class="info-box">
+            <p><strong>Situație:</strong> Prețurile energiei s-au schimbat de la 0.80 la 0.95 RON/kWh</p>
+            <p><strong>Soluție:</strong></p>
+            <ol>
+                <li>Deschideți configurarea</li>
+                <li>Modificați "Preț Electricitate" → 0.95 RON/kWh</li>
+                <li>Aplicați configurația</li>
+                <li>Perioada de recuperare se va reduce (economii mai mari)</li>
+            </ol>
+        </div>
+
+        <h3>2. Regiuni cu Iradiere Diferită</h3>
+        <div class="info-box">
+            <p><strong>Situație:</strong> Locuiți în nordul României (mai puțin soare)</p>
+            <p><strong>Soluție:</strong></p>
+            <ol>
+                <li>Ajustați "Ore Solare Maxime/Zi" → 4.0 ore</li>
+                <li>Modificați "Raport de Producție" → 1.2</li>
+                <li>Sistemul va recomanda mai multe panouri pentru a compensa</li>
+            </ol>
+        </div>
+
+        <h3>3. Sistem Off-Grid</h3>
+        <div class="info-box">
+            <p><strong>Situație:</strong> Doriți independență completă de rețea</p>
+            <p><strong>Soluție:</strong></p>
+            <ol>
+                <li>Modificați "Zile Autonomie" → 4 zile</li>
+                <li>Ajustați "Marjă Siguranță" → 50% (1.5)</li>
+                <li>Sistemul va dimensiona baterii și invertor mai mari</li>
+            </ol>
+        </div>
+
+        <h3>4. Comparare Echipamente</h3>
+        <div class="info-box">
+            <p><strong>Situație:</strong> Comparați panouri 415W vs 550W premium</p>
+            <p><strong>Soluție:</strong></p>
+            <ol>
+                <li>Configurați prima variantă (415W, cost 3.98 RON/W)</li>
+                <li>Notați rezultatele (screenshot sau notițe)</li>
+                <li>Schimbați în 550W, cost 4.50 RON/W, eficiență 90%</li>
+                <li>Comparați cele două scenarii</li>
+            </ol>
+        </div>
+
+        <h2>⚠️ Importante de Reținut</h2>
+
+        <div class="warning-box">
+            <h4>Atenționări Importante:</h4>
+            <ul>
+                <li><strong>Acestea sunt estimări:</strong> Consultați întotdeauna un instalator autorizat ANRE pentru calcule exacte</li>
+                <li><strong>Nu subestimați costurile:</strong> 30% cost instalare este un minim, poate fi mai mult</li>
+                <li><strong>Verificați garanțiile:</strong> Asigurați-vă că parametrii corespund echipamentelor reale</li>
+                <li><strong>Degradarea în timp:</strong> Panourile pierd 0.5-1% eficiență/an</li>
+            </ul>
+        </div>
+
+        <div class="success-box">
+            <h4>✅ Recomandări:</h4>
+            <ul>
+                <li><strong>Folosiți date locale:</strong> Ajustați orele solare pentru regiunea dvs.</li>
+                <li><strong>Actualizați prețurile:</strong> Verificați periodic costurile de piață</li>
+                <li><strong>Consultați tabelul E.ON:</strong> Folosiți ca benchmark pentru validare</li>
+                <li><strong>Supradimensionați:</strong> Considerați creșteri viitoare (mașină electrică, etc.)</li>
+            </ul>
+        </div>
+
+        <h2>📋 Scenarii Predefinite Disponibile</h2>
+
+        <p>Aplicația include 10 scenarii predefinite care pot fi folosite direct:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Scenariu</th>
+                    <th>Descriere</th>
+                    <th>Când să Folosiți</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Budget</strong></td>
+                    <td>Configurație economică cu costuri minime</td>
+                    <td>Buget limitat, backup rețea disponibil</td>
+                </tr>
+                <tr>
+                    <td><strong>Premium</strong></td>
+                    <td>Echipamente high-end, eficiență maximă</td>
+                    <td>Investiție pe termen lung, calitate maximă</td>
+                </tr>
+                <tr>
+                    <td><strong>Nord România</strong></td>
+                    <td>Optimizat pentru iradiere mai mică</td>
+                    <td>Regiuni nordice (Cluj, Maramureș, etc.)</td>
+                </tr>
+                <tr>
+                    <td><strong>Sud România</strong></td>
+                    <td>Optimizat pentru iradiere mai mare</td>
+                    <td>Regiuni sudice (București, Constanța, etc.)</td>
+                </tr>
+                <tr>
+                    <td><strong>Off-Grid</strong></td>
+                    <td>Autonomie completă, fără rețea</td>
+                    <td>Zone izolate, independență energetică</td>
+                </tr>
+                <tr>
+                    <td><strong>Grid-Tied Minimal</strong></td>
+                    <td>Baterii minime, conectat la rețea</td>
+                    <td>Rețea stabilă, backup minimal</td>
+                </tr>
+                <tr>
+                    <td><strong>EV Ready</strong></td>
+                    <td>Dimensionat pentru încărcare mașină electrică</td>
+                    <td>Aveți sau planificați mașină electrică</td>
+                </tr>
+                <tr>
+                    <td><strong>Piață 2024</strong></td>
+                    <td>Prețuri actualizate octombrie 2025</td>
+                    <td>Pentru calcule cu valori curente de piață</td>
+                </tr>
+                <tr>
+                    <td><strong>Munte</strong></td>
+                    <td>Optimizat pentru altitudine mare</td>
+                    <td>Zone montane (mai mult soare, frig)</td>
+                </tr>
+                <tr>
+                    <td><strong>Urban</strong></td>
+                    <td>Adaptat pentru clădiri înalte, posibilă umbrire</td>
+                    <td>Apartamente, clădiri urbane</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>🔍 Validări Automate</h2>
+
+        <p>Sistemul validează automat valorile introduse și afișează avertismente pentru:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Parametru</th>
+                    <th>Interval Normal</th>
+                    <th>Avertisment Dacă</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Putere Panou</td>
+                    <td>250-600W</td>
+                    <td>Sub 250W sau peste 600W</td>
+                </tr>
+                <tr>
+                    <td>Raport Producție</td>
+                    <td>1.0-2.0</td>
+                    <td>Sub 1.0 sau peste 2.0</td>
+                </tr>
+                <tr>
+                    <td>Eficiență Baterie</td>
+                    <td>70-98%</td>
+                    <td>Sub 70% sau peste 98%</td>
+                </tr>
+                <tr>
+                    <td>Eficiență Invertor</td>
+                    <td>90-99%</td>
+                    <td>Sub 90% sau peste 99%</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>📖 Resurse Suplimentare</h2>
+
+        <div class="highlight-box">
+            <h4>Documentație Tehnică Completă</h4>
+            <ul>
+                <li><strong>PV_PARAMETRIZATION_GUIDE.md</strong> - Ghid complet de utilizare (în repository)</li>
+                <li><strong>PARAMETRIZATION_SUMMARY.md</strong> - Rezumat implementare tehnică</li>
+                <li><strong>pvSystemConfig.js</strong> - Cod sursă cu toate valorile și documentația lor</li>
+                <li><strong>pvConfigExamples.js</strong> - 10 exemple de configurații predefinite</li>
+            </ul>
+        </div>
+
+        <h2>🎯 Rezultate Finale</h2>
+
+        <p>După aplicarea configurației, veți vedea actualizate:</p>
+
+        <ul class="feature-list">
+            <li><strong>Număr panouri necesare</strong> - Calculat pe baza puterii/panou configurate</li>
+            <li><strong>Suprafață totală acoperiș</strong> - Bazată pe suprafața/panou setată</li>
+            <li><strong>Capacitate baterie</strong> - Conform zilelor de autonomie dorite</li>
+            <li><strong>Dimensiune invertor</strong> - Cu marja de siguranță configurată</li>
+            <li><strong>Cost total sistem</strong> - Cu toate componentele și instalarea</li>
+            <li><strong>Perioada de recuperare</strong> - Bazată pe prețul electricității configurat</li>
+            <li><strong>Economii anuale</strong> - Estimate conform consumului și tarifelor</li>
+            <li><strong>ROI pe 25 de ani</strong> - Return on Investment complet</li>
+        </ul>
+
+        <div class="highlight-box">
+            <h3>🌟 Beneficii Cheie</h3>
+            <ul class="feature-list">
+                <li>Transparență totală - știți exact ce parametri sunt folosiți</li>
+                <li>Flexibilitate - adaptați la situația dvs. specifică</li>
+                <li>Actualizare ușoară - modificați prețurile când piața se schimbă</li>
+                <li>Comparare scenarii - testați diferite variante rapid</li>
+                <li>Bazat pe date validate - valori implicite de la E.ON România</li>
+                <li>Validare automată - previne erori de configurare</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h4>📞 Suport și Consultanță</h4>
+            <p>Pentru o evaluare profesională și instalare:</p>
+            <ul>
+                <li>Contactați un instalator autorizat ANRE</li>
+                <li>Solicitați o analiză la fața locului</li>
+                <li>Folosiți aceste calcule ca punct de plecare în discuții</li>
+                <li>Verificați tabelul E.ON ca referință</li>
+            </ul>
+        </div>
+
+        <hr style="margin: 40px 0; border: none; border-top: 2px solid #eee;">
+
+        <p style="text-align: center; color: #999; font-size: 0.9em;">
+            <strong>Versiune:</strong> 2.0 | <strong>Ultima actualizare:</strong> Octombrie 2025<br>
+            <strong>Surse:</strong> E.ON România, Standarde Industrie, Date Piață 2024-2025
+        </p>
+    </div>
+</body>
+</html>

@@ -28,6 +28,19 @@ A comprehensive React application for analyzing electric consumption data and de
 - Inverter sizing recommendations
 - Three sizing options: Conservative, Optimal, Aggressive
 - Technical specifications generation
+- **🆕 Fully configurable parameters** based on E.ON Romania data
+- **16 customizable calculation parameters**
+- **10 pre-defined scenarios** for different use cases
+
+### ⚙️ **Parametrizable System (NEW!)** 
+- Complete control over all calculation parameters
+- E.ON Romania validated default values
+- Real-time parameter validation
+- Configurable solar panel specifications (wattage, efficiency, cost)
+- Adjustable battery parameters (autonomy, efficiency, cost)
+- Customizable inverter settings (safety margin, cost, efficiency)
+- Financial parameters (electricity price, installation costs, exchange rates)
+- Pre-defined scenarios: Budget, Premium, North/South Romania, Off-grid, EV-ready, and more
 
 ### 💰 **Financial Analysis**
 - Complete cost breakdown (panels, battery, inverter, installation)
@@ -124,6 +137,38 @@ Perfect for:
 - **Solar Installers**: System sizing and cost estimation
 - **Facility Managers**: Energy consumption optimization
 - **Research**: Energy pattern analysis and efficiency studies
+
+## 📚 Documentation
+
+Comprehensive documentation is available in multiple formats:
+
+### Markdown Documentation
+- **[CLIENT_SUMMARY.md](CLIENT_SUMMARY.md)** - Easy-to-understand guide for homeowners
+- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - One-page formula cheat sheet
+- **[TECHNICAL_ANALYSIS_FORMULAS.md](TECHNICAL_ANALYSIS_FORMULAS.md)** - Complete technical specifications
+- **[DATA_READING_IMPROVEMENTS.md](DATA_READING_IMPROVEMENTS.md)** - Data processing pipeline
+- **[PV_PARAMETRIZATION_GUIDE.md](PV_PARAMETRIZATION_GUIDE.md)** ⚙️ **NEW!** - Complete parametrizable system guide
+- **[PARAMETRIZATION_SUMMARY.md](PARAMETRIZATION_SUMMARY.md)** - Technical implementation summary
+- **[DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)** - Documentation hub and navigation
+
+### Interactive HTML Documentation
+Access via `/docs/` route in the application:
+- **client-summary.html** - Client-friendly overview
+- **quick-reference.html** - Quick formula lookup
+- **technical-formulas.html** - Complete formulas
+- **data-processing.html** - Data pipeline details
+- **pv-configuration.html** ⚙️ **NEW!** - PV System Configuration Guide
+
+### What's New in v2.0
+The **PV System Configuration** feature introduces:
+- 16 fully configurable calculation parameters
+- E.ON Romania validated default values
+- 10 pre-defined scenarios (Budget, Premium, Off-grid, EV-ready, etc.)
+- Real-time parameter validation
+- Regional optimization (North/South Romania, Mountains, Urban)
+- Complete transparency on all calculations
+
+See **[PV_PARAMETRIZATION_GUIDE.md](PV_PARAMETRIZATION_GUIDE.md)** for detailed usage instructions.
 
 ## 🤝 Contributing
 
