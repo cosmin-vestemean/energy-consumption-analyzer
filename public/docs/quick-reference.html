@@ -19,10 +19,11 @@
 
     <div class="container">
         <div class="doc-content">
+
 <h1>Quick Reference - Analysis &amp; Formulas</h1>
 <p><strong>Electric Consumption Analyzer</strong> | Version 1.0 | October 2025</p>
 <hr>
-<h2>📊 What Gets Analyzed</h2>
+<h2>­čôŐ What Gets Analyzed</h2>
 <table>
 <thead>
 <tr>
@@ -38,12 +39,12 @@
 </tr>
 <tr>
 <td><strong>Average Hourly</strong></td>
-<td>Total ÷ Number of readings</td>
+<td>Total ├Ě Number of readings</td>
 <td>Typical hourly usage</td>
 </tr>
 <tr>
 <td><strong>Average Daily</strong></td>
-<td>Sum of daily totals ÷ Days</td>
+<td>Sum of daily totals ├Ě Days</td>
 <td>Typical daily usage</td>
 </tr>
 <tr>
@@ -53,83 +54,60 @@
 </tr>
 <tr>
 <td><strong>Load Factor</strong></td>
-<td>(Average ÷ Peak) × 100%</td>
+<td>(Average ├Ě Peak) ├Ś 100%</td>
 <td>Usage consistency (higher = better)</td>
 </tr>
 </tbody></table>
 <hr>
-<h2>☀️ Solar System Sizing</h2>
-
-<div style="background: #e8f4f8; border-left: 4px solid #2196F3; padding: 15px; margin: 15px 0; border-radius: 8px;">
-    <strong>⚙️ NEW in v2.0:</strong> All parameters below are now fully configurable! Values shown are defaults based on E.ON Romania data. See <a href="/docs/pv-configuration.html">PV Configuration Guide</a> for customization.
-</div>
-
+<h2>ÔśÇ´ŞĆ Solar System Sizing</h2>
 <h3>Solar Panels</h3>
-<pre><code>Required Capacity (kW) = Daily kWh ÷ Peak Sun Hours ÷ System Efficiency
-Default: Daily kWh ÷ 4.5 hours ÷ 0.85 [configurable: 3.0-7.0h, 70-95%]
+<pre><code>Required Capacity (kW) = Daily kWh ├Ě 4.5 hours ├Ě 0.85 efficiency
 
-Number of Panels = Capacity × 1000 ÷ Panel Wattage (round up)
-Default: Capacity × 1000 ÷ 415 watts [E.ON standard, configurable: 250-600W]
+Number of Panels = Capacity ├Ś 1000 ├Ě 400 watts per panel (round up)
 </code></pre>
-<p><strong>Example (default):</strong> 30 kWh/day → 7.84 kW → <strong>19 panels @ 415W</strong></p>
-<p><strong>Example (old 400W):</strong> 30 kWh/day → 7.84 kW → <strong>20 panels @ 400W</strong></p>
-
+<p><strong>Example:</strong> 30 kWh/day Ôćĺ 7.84 kW Ôćĺ <strong>20 panels</strong></p>
 <h3>Battery Storage</h3>
-<pre><code>Battery (kWh) = Daily kWh × Autonomy Days ÷ Battery Efficiency
-Default: Daily kWh × 2 days ÷ 0.9 [configurable: 0.5-5 days, 70-98%]
+<pre><code>Battery (kWh) = Daily kWh ├Ś 2 days ├Ě 0.9 efficiency
 </code></pre>
-<p><strong>Example:</strong> 30 kWh/day → <strong>66.7 kWh battery</strong></p>
+<p><strong>Example:</strong> 30 kWh/day Ôćĺ <strong>66.7 kWh battery</strong></p>
 <h3>Inverter</h3>
-<pre><code>Inverter (kW) = Peak consumption × Safety Margin
-Default: Peak × 1.2 [configurable: 1.1-1.5 (10-50% margin)]
+<pre><code>Inverter (kW) = Peak consumption ├Ś 1.2 safety margin
 </code></pre>
-<p><strong>Example:</strong> 5 kW peak → <strong>6 kW inverter</strong></p>
-
+<p><strong>Example:</strong> 5 kW peak Ôćĺ <strong>6 kW inverter</strong></p>
 <hr>
-<h2>💰 Cost Estimation</h2>
+<h2>­čĺ░ Cost Estimation</h2>
 <table>
 <thead>
 <tr>
 <th>Component</th>
 <th>Price Formula</th>
-<th>Notes</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><strong>Solar Panels</strong></td>
-<td>Panels × Wattage × Cost/W</td>
-<td>Default: 415W × 3.98 RON/W [configurable]</td>
+<td>Panels ├Ś 400W ├Ś ÔéČ0.80/watt</td>
 </tr>
 <tr>
 <td><strong>Battery</strong></td>
-<td>Capacity (kWh) × Cost/kWh</td>
-<td>Default: 1,988 RON/kWh [configurable]</td>
+<td>Capacity (kWh) ├Ś ÔéČ400/kWh</td>
 </tr>
 <tr>
 <td><strong>Inverter</strong></td>
-<td>Size (kW) × Cost/kW</td>
-<td>Default: 1,491 RON/kW [configurable]</td>
+<td>Size (kW) ├Ś ÔéČ300/kW</td>
 </tr>
 <tr>
 <td><strong>TOTAL</strong></td>
-<td>Equipment × Multiplier</td>
-<td>Default: × 1.3 (30% installation) [configurable: 20-50%]</td>
+<td>Equipment ├Ś 1.3 (includes installation)</td>
 </tr>
 </tbody></table>
-
-<p><strong>Note:</strong> Costs in RON (Romanian Leu). Previous versions used EUR. All costs are configurable in the application.</p>
-
 <hr>
-<h2>📈 Return on Investment</h2>
-<pre><code>Annual Savings = Daily kWh × 365 × Electricity Rate
+<h2>­čôł Return on Investment</h2>
+<pre><code>Annual Savings = Daily kWh ├Ś 365 ├Ś ÔéČ0.25/kWh
 
-Default: Daily kWh × 365 × 0.80 RON/kWh [configurable: 0.50-2.00 RON/kWh]
-Previous versions used €0.25/kWh (European average)
-
-Payback Period = Total Cost ÷ Annual Savings
+Payback Period = Total Cost ├Ě Annual Savings
 </code></pre>
 <hr>
-<h2>🎯 System Options</h2>
+<h2>­čÄ» System Options</h2>
 <table>
 <thead>
 <tr>
@@ -159,48 +137,38 @@ Payback Period = Total Cost ÷ Annual Savings
 </tr>
 </tbody></table>
 <hr>
-<h2>🔍 Understanding Your Patterns</h2>
+<h2>­čöŹ Understanding Your Patterns</h2>
 <h3>Load Factor</h3>
 <ul>
-<li><strong>&gt;70%</strong>: Consistent usage ✅ (efficient)</li>
+<li><strong>&gt;70%</strong>: Consistent usage Ôťů (efficient)</li>
 <li><strong>40-70%</strong>: Normal residential pattern</li>
 <li><strong>&lt;40%</strong>: High peaks (need robust system)</li>
 </ul>
 <h3>Peak-to-Off-Peak Ratio</h3>
 <ul>
-<li><strong>&gt;5</strong>: Daytime heavy ✅ (ideal for solar!)</li>
+<li><strong>&gt;5</strong>: Daytime heavy Ôťů (ideal for solar!)</li>
 <li><strong>2-5</strong>: Normal pattern</li>
 <li><strong>&lt;2</strong>: Evening/night heavy (need big battery)</li>
 </ul>
 <h3>Variability (CV)</h3>
 <ul>
-<li><strong>&lt;50%</strong>: Low variability ✅ (predictable)</li>
+<li><strong>&lt;50%</strong>: Low variability Ôťů (predictable)</li>
 <li><strong>50-100%</strong>: Moderate (typical)</li>
 <li><strong>&gt;100%</strong>: High variability (need margins)</li>
 </ul>
 <hr>
-<h2>⚙️ Key Assumptions (Default Values - All Configurable!)</h2>
-
-<div style="background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%); border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 8px;">
-    <p><strong>⚙️ Version 2.0:</strong> All parameters below are now configurable in the application. See <a href="/docs/pv-configuration.html">PV Configuration Guide</a> for customization options.</p>
-</div>
-
+<h2>ÔÜÖ´ŞĆ Key Assumptions</h2>
 <ul>
-<li><strong>System Efficiency:</strong> 85% [range: 70-95%]</li>
-<li><strong>Peak Sun Hours:</strong> 4.5 hours/day [range: 3.0-7.0h, Romania average]</li>
-<li><strong>Panel Size:</strong> 415 watts [range: 250-600W, E.ON standard]</li>
-<li><strong>Battery:</strong> Lithium-ion, 90% efficient [range: 70-98%]</li>
-<li><strong>Electricity Rate:</strong> 0.80 RON/kWh [range: 0.50-2.00, configurable]</li>
-<li><strong>Autonomy:</strong> 2 days backup [range: 0.5-5 days]</li>
-<li><strong>Production Ratio:</strong> 1.3 [range: 1.0-2.0, E.ON Romania: 1.3-1.6]</li>
-<li><strong>Installation Cost:</strong> +30% [range: +20% to +50%]</li>
+<li><strong>System Efficiency:</strong> 85%</li>
+<li><strong>Peak Sun Hours:</strong> 4.5 hours/day</li>
+<li><strong>Panel Size:</strong> 400 watts</li>
+<li><strong>Battery:</strong> Lithium-ion, 90% efficient</li>
+<li><strong>Electricity Rate:</strong> ÔéČ0.25/kWh</li>
+<li><strong>Autonomy:</strong> 2 days backup</li>
 </ul>
-
-<p><strong>Data Source:</strong> E.ON Romania validated values + industry standards</p>
-
 <hr>
-<h2>⚠️ Important Notes</h2>
-<p>✋ <strong>These are estimates only</strong></p>
+<h2>ÔÜá´ŞĆ Important Notes</h2>
+<p>Ôťő <strong>These are estimates only</strong></p>
 <ul>
 <li>Always get professional site surveys</li>
 <li>Check local solar conditions</li>
@@ -208,14 +176,14 @@ Payback Period = Total Cost ÷ Annual Savings
 <li>Compare multiple installer quotes</li>
 <li>Research local incentives</li>
 </ul>
-<p>✅ <strong>What&#39;s Transparent</strong></p>
+<p>Ôťů <strong>What&#39;s Transparent</strong></p>
 <ul>
 <li>All formulas documented</li>
 <li>Industry-standard calculations</li>
 <li>No hidden assumptions</li>
 </ul>
 <hr>
-<h2>📱 Application Access</h2>
+<h2>­čô▒ Application Access</h2>
 <p><strong>URL:</strong> <a href="https://ubiquitous-orbit-wvp4rxqq66wfgw5q-3001.app.github.dev/">https://ubiquitous-orbit-wvp4rxqq66wfgw5q-3001.app.github.dev/</a></p>
 <p><strong>Required Data:</strong></p>
 <ul>
@@ -224,11 +192,11 @@ Payback Period = Total Cost ÷ Annual Savings
 <li>Minimum 1 week, recommended 1 year</li>
 </ul>
 <hr>
-<h2>📚 Full Documentation</h2>
+<h2>­čôÜ Full Documentation</h2>
 <ul>
-<li><strong>CLIENT_SUMMARY.md</strong> → Detailed explanations</li>
-<li><strong>TECHNICAL_ANALYSIS_FORMULAS.md</strong> → Complete formulas</li>
-<li><strong>DATA_READING_IMPROVEMENTS.md</strong> → Data processing details</li>
+<li><strong>CLIENT_SUMMARY.md</strong> Ôćĺ Detailed explanations</li>
+<li><strong>TECHNICAL_ANALYSIS_FORMULAS.md</strong> Ôćĺ Complete formulas</li>
+<li><strong>DATA_READING_IMPROVEMENTS.md</strong> Ôćĺ Data processing details</li>
 </ul>
 <hr>
 <p><em>Quick reference card for clients and contractors</em></p>

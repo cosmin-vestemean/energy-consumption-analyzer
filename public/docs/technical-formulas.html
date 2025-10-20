@@ -19,6 +19,7 @@
 
     <div class="container">
         <div class="doc-content">
+
 <h1>Electric Consumption Analyzer - Technical Analysis &amp; Formulas</h1>
 <p><strong>Document Version:</strong> 1.0<br><strong>Date:</strong> October 20, 2025<br><strong>Application:</strong> Electric Consumption Analyzer for PV System Design</p>
 <hr>
@@ -47,10 +48,10 @@
 </ul>
 <h3>Data Validation</h3>
 <p>Each data point is validated against the following criteria:</p>
-<pre><code>✓ energie ≥ 0 (allows zero consumption)
-✓ 0 ≤ ora ≤ 23
-✓ 1 ≤ zi ≤ 31
-✓ 1 ≤ luna ≤ 12
+<pre><code>Ôťô energie Ôëą 0 (allows zero consumption)
+Ôťô 0 ÔëĄ ora ÔëĄ 23
+Ôťô 1 ÔëĄ zi ÔëĄ 31
+Ôťô 1 ÔëĄ luna ÔëĄ 12
 </code></pre>
 <p><strong>Data Handling:</strong></p>
 <ul>
@@ -62,7 +63,7 @@
 <h2>Statistical Analysis</h2>
 <h3>1. Basic Statistics</h3>
 <h4>Total Consumption</h4>
-<pre><code>Total Consumption = Σ(energie_i) for all i data points
+<pre><code>Total Consumption = ╬ú(energie_i) for all i data points
 
 Where:
   energie_i = energy consumption at reading i
@@ -70,7 +71,7 @@ Where:
 <h4>Average Hourly Consumption</h4>
 <pre><code>Average Hourly Consumption = Total Consumption / Number of Data Points
 
-Formula: avg = Σ(E_i) / n
+Formula: avg = ╬ú(E_i) / n
 
 Where:
   E_i = energy value at reading i
@@ -82,7 +83,7 @@ Minimum Consumption = min(energie_i) for all i
 </code></pre>
 <h3>2. Hourly Statistics</h3>
 <p>For each hour h (0-23):</p>
-<pre><code>Hourly Average(h) = Σ(E_h,i) / n_h
+<pre><code>Hourly Average(h) = ╬ú(E_h,i) / n_h
 
 Hourly Maximum(h) = max(E_h,i)
 
@@ -93,9 +94,9 @@ Where:
   n_h = number of readings at hour h
 </code></pre>
 <h3>3. Daily Statistics</h3>
-<pre><code>Daily Total(d) = Σ(energie_i) for all readings on day d
+<pre><code>Daily Total(d) = ╬ú(energie_i) for all readings on day d
 
-Daily Average = Σ(Daily Total_d) / Number of Days
+Daily Average = ╬ú(Daily Total_d) / Number of Days
 
 Daily Maximum = max(Daily Total_d)
 
@@ -108,9 +109,9 @@ Where:
 <h2>Consumption Pattern Analysis</h2>
 <h3>1. Peak vs Off-Peak Analysis</h3>
 <p><strong>Peak Hours Definition:</strong> 10:00 - 19:00 (10 AM - 7 PM)<br><strong>Off-Peak Hours Definition:</strong> 00:00 - 06:00, 22:00 - 23:00 (12 AM - 6 AM, 10 PM - 11 PM)</p>
-<pre><code>Peak Average = Σ(E_peak) / n_peak
+<pre><code>Peak Average = ╬ú(E_peak) / n_peak
 
-Off-Peak Average = Σ(E_off-peak) / n_off-peak
+Off-Peak Average = ╬ú(E_off-peak) / n_off-peak
 
 Peak-to-Off-Peak Ratio = Peak Average / Off-Peak Average
 
@@ -122,9 +123,9 @@ Where:
 </code></pre>
 <h3>2. Load Factor</h3>
 <p>Load factor indicates how efficiently the energy system is utilized:</p>
-<pre><code>Load Factor = (Average Consumption / Peak Consumption) × 100%
+<pre><code>Load Factor = (Average Consumption / Peak Consumption) ├Ś 100%
 
-Formula: LF = (P_avg / P_max) × 100
+Formula: LF = (P_avg / P_max) ├Ś 100
 
 Where:
   P_avg = average hourly consumption
@@ -132,30 +133,30 @@ Where:
 
 Interpretation:
   LF &gt; 70%: High and consistent energy usage (efficient)
-  40% &lt; LF ≤ 70%: Moderate usage with some peaks
-  LF ≤ 40%: High variability, peak-dominated usage
+  40% &lt; LF ÔëĄ 70%: Moderate usage with some peaks
+  LF ÔëĄ 40%: High variability, peak-dominated usage
 </code></pre>
 <h3>3. Consumption Variability</h3>
 <h4>Variance</h4>
-<pre><code>Variance = Σ((E_i - μ)²) / n
+<pre><code>Variance = ╬ú((E_i - ╬╝)┬▓) / n
 
 Where:
   E_i = energy value at reading i
-  μ = mean (average) consumption
+  ╬╝ = mean (average) consumption
   n = total number of readings
 </code></pre>
 <h4>Standard Deviation</h4>
-<pre><code>Standard Deviation (σ) = √Variance
+<pre><code>Standard Deviation (¤â) = ÔłÜVariance
 
-σ = √[Σ((E_i - μ)²) / n]
+¤â = ÔłÜ[╬ú((E_i - ╬╝)┬▓) / n]
 </code></pre>
 <h4>Coefficient of Variation (CV)</h4>
-<pre><code>Coefficient of Variation = (σ / μ) × 100%
+<pre><code>Coefficient of Variation = (¤â / ╬╝) ├Ś 100%
 
 Interpretation:
   CV &gt; 100%: Very high variability
-  50% &lt; CV ≤ 100%: Moderate variability
-  CV ≤ 50%: Low variability, consistent usage
+  50% &lt; CV ÔëĄ 100%: Moderate variability
+  CV ÔëĄ 50%: Low variability, consistent usage
 </code></pre>
 <h3>4. Consumption Distribution</h3>
 <p>Data is categorized into consumption ranges:</p>
@@ -167,74 +168,66 @@ Interpretation:
 <li>20-30 kWh</li>
 <li>30+ kWh</li>
 </ul>
-<pre><code>Percentage in Range = (Count in Range / Total Readings) × 100%
+<pre><code>Percentage in Range = (Count in Range / Total Readings) ├Ś 100%
 </code></pre>
 <hr>
 <h2>PV System Sizing Calculations</h2>
-<div style="background-color: #e7f3ff; padding: 15px; border-left: 4px solid #2196F3; margin-bottom: 20px;">
-    <strong>📢 v2.0 Update:</strong> All parameters below are now <strong>configurable</strong> in the application interface. The values shown are defaults based on <a href="https://www.eon-energie.ro/ro/pentru-acasa/articole-utile/consum-energetic/articole-legate-de-consum/cate-panouri-fotovoltaice-sunt-necesare-unei-case-din-romania.html" target="_blank">E.ON Romania data</a>.
-</div>
-<h3>Configurable Parameters (Defaults + Ranges)</h3>
-<pre><code>System Efficiency (η_sys) = 0.85 (85%) [Range: 0.70-0.95]
-Panel Wattage (P_panel) = 415 W [Range: 250-700 W]
-Peak Sun Hours (PSH) = 4.5 hours/day [Range: 3.0-6.0 hours]
-Autonomy Days (D_auto) = 2 days [Range: 1-5 days]
-Battery Efficiency (η_bat) = 0.90 (90%) [Range: 0.80-0.98]
-Battery Cycle Life = 5000 cycles [Range: 3000-10000 cycles]
-Inverter Safety Margin = 1.20 (20% oversizing) [Range: 1.10-1.50]
-Electricity Price = 0.80 RON/kWh [Range: 0.40-1.50 RON/kWh]
-
-Source: E.ON Romania - "Câte panouri fotovoltaice sunt necesare unei case din România?"
+<h3>Assumptions &amp; Constants</h3>
+<pre><code>System Efficiency (╬Ě_sys) = 0.85 (85%)
+Panel Wattage (P_panel) = 400 W
+Peak Sun Hours (PSH) = 4.5 hours/day
+Autonomy Days (D_auto) = 2 days
+Battery Efficiency (╬Ě_bat) = 0.9 (90%)
+Battery Cycle Life = 5000 cycles
+Inverter Safety Margin = 1.2 (20% oversizing)
 </code></pre>
 <h3>1. Solar Array Sizing</h3>
 <h4>Required PV Array Capacity</h4>
 <pre><code>PV Array Size (kW) = (Daily Energy Need / Peak Sun Hours) / System Efficiency
 
-Formula: P_pv = (E_daily / PSH) / η_sys
+Formula: P_pv = (E_daily / PSH) / ╬Ě_sys
 
 Where:
   E_daily = average daily consumption (kWh)
   PSH = peak sun hours per day (hours)
-  η_sys = overall system efficiency (0.85)
+  ╬Ě_sys = overall system efficiency (0.85)
 
 Example:
   If E_daily = 30 kWh
   P_pv = (30 / 4.5) / 0.85 = 7.84 kW
 </code></pre>
 <h4>Number of Solar Panels</h4>
-<pre><code>Number of Panels = ⌈(PV Array Size × 1000) / Panel Wattage⌉
+<pre><code>Number of Panels = Ôîł(PV Array Size ├Ś 1000) / Panel WattageÔîë
 
-Formula: N_panels = ⌈(P_pv × 1000) / P_panel⌉
+Formula: N_panels = Ôîł(P_pv ├Ś 1000) / P_panelÔîë
 
 Where:
-  ⌈ ⌉ = ceiling function (round up)
+  Ôîł Ôîë = ceiling function (round up)
   P_pv = PV array size in kW
-  P_panel = individual panel wattage (default: 415W, configurable 250-700W)
+  P_panel = individual panel wattage (400W)
 
-Example (using default 415W):
-  N_panels = ⌈(7.84 × 1000) / 415⌉ = ⌈18.9⌉ = 19 panels
-  
-Note: With older 400W panels: ⌈(7.84 × 1000) / 400⌉ = 20 panels
+Example:
+  N_panels = Ôîł(7.84 ├Ś 1000) / 400Ôîë = Ôîł19.6Ôîë = 20 panels
 </code></pre>
 <h3>2. Battery Storage Sizing</h3>
-<pre><code>Battery Capacity (kWh) = (Daily Energy Need × Autonomy Days) / Battery Efficiency
+<pre><code>Battery Capacity (kWh) = (Daily Energy Need ├Ś Autonomy Days) / Battery Efficiency
 
-Formula: C_bat = (E_daily × D_auto) / η_bat
+Formula: C_bat = (E_daily ├Ś D_auto) / ╬Ě_bat
 
 Where:
   E_daily = average daily consumption (kWh)
   D_auto = days of autonomy (2 days)
-  η_bat = battery round-trip efficiency (0.9)
+  ╬Ě_bat = battery round-trip efficiency (0.9)
 
 Example:
   If E_daily = 30 kWh
-  C_bat = (30 × 2) / 0.9 = 66.67 kWh
+  C_bat = (30 ├Ś 2) / 0.9 = 66.67 kWh
 </code></pre>
 <p><strong>Note:</strong> 2 days of autonomy provides backup power during cloudy weather or system maintenance.</p>
 <h3>3. Inverter Sizing</h3>
-<pre><code>Inverter Size (kW) = Peak Power Need × Safety Margin
+<pre><code>Inverter Size (kW) = Peak Power Need ├Ś Safety Margin
 
-Formula: P_inv = P_peak × 1.2
+Formula: P_inv = P_peak ├Ś 1.2
 
 Where:
   P_peak = maximum hourly consumption (kW)
@@ -242,56 +235,55 @@ Where:
 
 Example:
   If P_peak = 5 kW
-  P_inv = 5 × 1.2 = 6 kW
+  P_inv = 5 ├Ś 1.2 = 6 kW
 </code></pre>
 <h3>4. Annual Energy Production</h3>
-<pre><code>Annual Production = PV Array Size × Peak Sun Hours × Days per Year
+<pre><code>Annual Production = PV Array Size ├Ś Peak Sun Hours ├Ś Days per Year
 
-Formula: E_annual = P_pv × PSH × 365
+Formula: E_annual = P_pv ├Ś PSH ├Ś 365
 
 Example:
-  E_annual = 7.84 × 4.5 × 365 = 12,878 kWh/year
+  E_annual = 7.84 ├Ś 4.5 ├Ś 365 = 12,878 kWh/year
 </code></pre>
 <h3>5. Energy Offset Percentage</h3>
-<pre><code>Energy Offset = min((Annual Production / Annual Consumption) × 100%, 100%)
+<pre><code>Energy Offset = min((Annual Production / Annual Consumption) ├Ś 100%, 100%)
 
-Formula: Offset = min((E_annual / E_consumption) × 100%, 100%)
+Formula: Offset = min((E_annual / E_consumption) ├Ś 100%, 100%)
 
 Where:
-  E_consumption = daily consumption × 365
+  E_consumption = daily consumption ├Ś 365
 </code></pre>
 <hr>
 <h2>Financial Analysis</h2>
 <h3>Cost Components</h3>
 <h4>Equipment Costs</h4>
-<pre><code>Panel Cost = Number of Panels × Panel Wattage × Cost per Watt
-           = N_panels × P_panel × €0.80/W
+<pre><code>Panel Cost = Number of Panels ├Ś Panel Wattage ├Ś Cost per Watt
+           = N_panels ├Ś P_panel ├Ś ÔéČ0.80/W
 
-Battery Cost = Battery Capacity × Cost per kWh
-             = C_bat × €400/kWh
+Battery Cost = Battery Capacity ├Ś Cost per kWh
+             = C_bat ├Ś ÔéČ400/kWh
 
-Inverter Cost = Inverter Size × Cost per kW
-              = P_inv × €300/kW
+Inverter Cost = Inverter Size ├Ś Cost per kW
+              = P_inv ├Ś ÔéČ300/kW
 </code></pre>
 <h4>Total System Cost</h4>
 <pre><code>Equipment Cost = Panel Cost + Battery Cost + Inverter Cost
 
-Installation Cost = Equipment Cost × 0.3 (30% for installation)
+Installation Cost = Equipment Cost ├Ś 0.3 (30% for installation)
 
-Total System Cost = Equipment Cost × 1.3
+Total System Cost = Equipment Cost ├Ś 1.3
 
 Where:
   1.3 = installation multiplier (equipment + 30% installation)
 </code></pre>
 <h3>Return on Investment (ROI)</h3>
 <h4>Annual Savings</h4>
-<pre><code>Annual Savings = Daily Energy × 365 × Electricity Rate × Energy Offset
+<pre><code>Annual Savings = Daily Energy ├Ś 365 ├Ś Electricity Rate ├Ś Energy Offset
 
-Formula: S_annual = E_daily × 365 × Price_elec × (Offset/100)
+Formula: S_annual = E_daily ├Ś 365 ├Ś ÔéČ0.25/kWh ├Ś (Offset/100)
 
-Configurable Parameters:
-  Electricity Rate = 0.80 RON/kWh (default) [Range: 0.40-1.50 RON/kWh]
-  Energy Offset = typically 70-100% of consumption covered by solar
+Assumptions:
+  Electricity Rate = ÔéČ0.25/kWh (average European rate)
 </code></pre>
 <h4>Payback Period</h4>
 <pre><code>Payback Period (years) = Total System Cost / Annual Savings
@@ -299,42 +291,42 @@ Configurable Parameters:
 Formula: T_payback = C_total / S_annual
 
 Example:
-  If C_total = €20,000 and S_annual = €2,500
+  If C_total = ÔéČ20,000 and S_annual = ÔéČ2,500
   T_payback = 20,000 / 2,500 = 8 years
 </code></pre>
 <h4>25-Year Return on Investment</h4>
-<pre><code>25-Year ROI = ((Annual Savings × 25) / Total System Cost - 1) × 100%
+<pre><code>25-Year ROI = ((Annual Savings ├Ś 25) / Total System Cost - 1) ├Ś 100%
 
-Formula: ROI_25 = ((S_annual × 25) / C_total - 1) × 100%
+Formula: ROI_25 = ((S_annual ├Ś 25) / C_total - 1) ├Ś 100%
 
 Example:
-  ROI_25 = ((2,500 × 25) / 20,000 - 1) × 100% = 212.5%
+  ROI_25 = ((2,500 ├Ś 25) / 20,000 - 1) ├Ś 100% = 212.5%
 </code></pre>
 <hr>
 <h2>System Sizing Options</h2>
 <p>The application provides three system sizing strategies:</p>
 <h3>1. Conservative System (80% Coverage)</h3>
-<pre><code>PV Array: Base PV Size × 0.8
-Panels: Base Panels × 0.8
-Battery: Base Battery × 0.6
-Total Cost: Base Cost × 0.75
-Energy Offset: Base Offset × 0.8
+<pre><code>PV Array: Base PV Size ├Ś 0.8
+Panels: Base Panels ├Ś 0.8
+Battery: Base Battery ├Ś 0.6
+Total Cost: Base Cost ├Ś 0.75
+Energy Offset: Base Offset ├Ś 0.8
 </code></pre>
 <p><strong>Use Case:</strong> Lower upfront cost, grid backup required, urban areas with reliable grid</p>
 <h3>2. Optimal System (100% Coverage)</h3>
-<pre><code>PV Array: Base PV Size × 1.0
-Panels: Base Panels × 1.0
-Battery: Base Battery × 1.0
-Total Cost: Base Cost × 1.0
-Energy Offset: Base Offset × 1.0
+<pre><code>PV Array: Base PV Size ├Ś 1.0
+Panels: Base Panels ├Ś 1.0
+Battery: Base Battery ├Ś 1.0
+Total Cost: Base Cost ├Ś 1.0
+Energy Offset: Base Offset ├Ś 1.0
 </code></pre>
 <p><strong>Use Case:</strong> Balanced approach, maximum self-consumption, typical residential installation</p>
 <h3>3. Aggressive System (130% Coverage)</h3>
-<pre><code>PV Array: Base PV Size × 1.3
-Panels: Base Panels × 1.3
-Battery: Base Battery × 1.2
-Total Cost: Base Cost × 1.4
-Energy Offset: min(Base Offset × 1.3, 100%)
+<pre><code>PV Array: Base PV Size ├Ś 1.3
+Panels: Base Panels ├Ś 1.3
+Battery: Base Battery ├Ś 1.2
+Total Cost: Base Cost ├Ś 1.4
+Energy Offset: min(Base Offset ├Ś 1.3, 100%)
 </code></pre>
 <p><strong>Use Case:</strong> Future-proof, supports EV charging, allows system expansion, off-grid capable</p>
 <hr>
@@ -349,11 +341,11 @@ Installation &amp; Wiring: ~23% of total cost (30% of equipment cost)
 <h2>Data Aggregation for Visualization</h2>
 <h3>Large Datasets (&gt; 1000 data points)</h3>
 <p>For performance optimization with yearly data:</p>
-<pre><code>Daily Average = Σ(E_hourly) / 24
+<pre><code>Daily Average = ╬ú(E_hourly) / 24
 
 Where data is grouped by day-month combination and averaged
 </code></pre>
-<h3>Small Datasets (≤ 1000 data points)</h3>
+<h3>Small Datasets (ÔëĄ 1000 data points)</h3>
 <p>All hourly data points are displayed without aggregation.</p>
 <hr>
 <h2>Quality Metrics &amp; Interpretations</h2>

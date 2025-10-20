@@ -52,25 +52,34 @@ files.forEach(file => {
         const content = fs.readFileSync(filePath, 'utf8');
         
         // Extract content between <body> and </body>
-        const bodyMatch = content.match(/<body>[\s\S]*?<\/body>/i);
+        const bodyMatch = content.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        
         if (!bodyMatch) {
-            console.log(`Skipping ${file} - no body tag found`);
+            console.log(`Skipping ${file} - no body tags found`);
             return;
         }
         
-        // Extract the actual content (remove old navigation and container divs)
-        let bodyContent = bodyMatch[0]
-            .replace(/<body>/i, '')
-            .replace(/<\/body>/i, '')
-            .trim();
+        let bodyContent = bodyMatch[1].trim();
         
-        // Remove old navigation headers
-        bodyContent = bodyContent.replace(/<div class="nav-header">[\s\S]*?<\/div>/gi, '');
-        bodyContent = bodyContent.replace(/<div class="container">/gi, '');
-        bodyContent = bodyContent.replace(/<\/div>\s*<\/body>/gi, '');
+        // Remove any existing header-bar divs (including nested nav-header)
+        bodyContent = bodyContent.replace(/<div class="header-bar">[\s\S]*?<\/div>\s*<\/div>/gi, '');
         
-        // Remove trailing </div> tags
-        bodyContent = bodyContent.replace(/<\/div>\s*$/g, '').trim();
+        // Remove any container wrappers at the start/end
+        bodyContent = bodyContent.replace(/^\s*<div class="container"[^>]*>\s*/gi, '');
+        
+        // Remove trailing divs more carefully - count opening and closing divs
+        // Remove doc-content wrappers
+        bodyContent = bodyContent.replace(/<div class="doc-content"[^>]*>/gi, '');
+        
+        // Remove </div> tags at the end (usually closing container/doc-content)
+        bodyContent = bodyContent.replace(/\s*<\/div>\s*$/gi, '');
+        bodyContent = bodyContent.replace(/\s*<\/div>\s*$/gi, ''); // Do it twice to clean nested divs
+        
+        // Remove any embedded <style> tags (old styling)
+        bodyContent = bodyContent.replace(/<style[\s\S]*?<\/style>/gi, '');
+        
+        // Clean up extra whitespace
+        bodyContent = bodyContent.trim();
         
         // Build new header with proper titles
         let header = newHeader
