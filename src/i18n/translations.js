@@ -57,6 +57,7 @@ export const translations = {
     
     // Consumption Analysis
     analysisTitle: "Analiză Detaliată Consum",
+    detailedConsumptionAnalysis: "Analiză Detaliată Consum",
     basicStats: "Statistici de Bază",
     consumptionPatterns: "Modele de Consum",
     peakConsumptionHours: "Ore de Consum Maxim",
@@ -69,6 +70,45 @@ export const translations = {
     dailyAverageConsumption: "Consum mediu zilnic",
     estimatedMonthlyCost: "Cost lunar estimat",
     estimatedYearlyCost: "Cost anual estimat",
+    
+    // Peak vs Off-Peak Analysis
+    peakVsOffPeakAnalysis: "Analiză Vârf vs Non-Vârf",
+    peakHoursAvg: "Medie Ore Vârf:",
+    offPeakAvg: "Medie Non-Vârf:",
+    peakOffPeakRatio: "Raport Vârf/Non-Vârf:",
+    
+    // Load Characteristics
+    loadCharacteristics: "Caracteristici Sarcină",
+    loadFactor: "Factor Sarcină:",
+    variabilityCV: "Variabilitate (CV):",
+    stdDeviation: "Dev. Standard:",
+    
+    // Peak Hours
+    peakHoursIdentification: "Identificare Ore Vârf",
+    
+    // Charts - Additional
+    consumptionDistribution: "Distribuție Consum",
+    consumptionTimeSeries: "Serie Temporală Consum",
+    consumptionVsHourScatter: "Grafic Consum vs Oră",
+    
+    // Key Insights
+    keyInsights: "Observații Cheie",
+    loadPattern: "Model Sarcină:",
+    lowLoadFactorSuggests: "Factor sarcină redus sugerează variabilitate ridicată și modele de utilizare la vârf.",
+    peakDemand: "Cerere Vârf:",
+    peakConsumptionOccurs: "Consum maxim de {value} kWh apare la ora {hour}:00. Aceasta reprezintă capacitatea minimă necesară a sistemului.",
+    variability: "Variabilitate:",
+    veryHighVariability: "Variabilitate foarte ridicată necesită proiectare robustă a sistemului.",
+    
+    // PV System Additional
+    dailyEnergyNeed: "Necesitate Energie Zilnică",
+    conservativeSystem: "Sistem Conservator",
+    costBreakdown: "Detaliere Costuri",
+    systemComparison: "Comparație Sisteme",
+    technicalSpecifications: "Specificații Tehnice (Sistem Optim)",
+    calculationParameters: "Parametri Calcul",
+    engineeringRecommendations: "Recomandări Inginerie",
+    pvSystemConfig: "Configurare Parametri Sistem Fotovoltaic",
     
     // PV Configuration
     pvConfigTitle: "Configurare Sistem Fotovoltaic",
@@ -242,6 +282,7 @@ export const translations = {
     
     // Consumption Analysis
     analysisTitle: "Detailed Consumption Analysis",
+    detailedConsumptionAnalysis: "Detailed Consumption Analysis",
     basicStats: "Basic Statistics",
     consumptionPatterns: "Consumption Patterns",
     peakConsumptionHours: "Peak Consumption Hours",
@@ -254,6 +295,45 @@ export const translations = {
     dailyAverageConsumption: "Daily average consumption",
     estimatedMonthlyCost: "Estimated monthly cost",
     estimatedYearlyCost: "Estimated yearly cost",
+    
+    // Peak vs Off-Peak Analysis
+    peakVsOffPeakAnalysis: "Peak vs Off-Peak Analysis",
+    peakHoursAvg: "Peak Hours Avg:",
+    offPeakAvg: "Off-Peak Avg:",
+    peakOffPeakRatio: "Peak/Off-Peak Ratio:",
+    
+    // Load Characteristics
+    loadCharacteristics: "Load Characteristics",
+    loadFactor: "Load Factor:",
+    variabilityCV: "Variability (CV):",
+    stdDeviation: "Std Deviation:",
+    
+    // Peak Hours
+    peakHoursIdentification: "Peak Hours Identification",
+    
+    // Charts - Additional
+    consumptionDistribution: "Consumption Distribution",
+    consumptionTimeSeries: "Consumption Time Series",
+    consumptionVsHourScatter: "Consumption vs Hour Scatter Plot",
+    
+    // Key Insights
+    keyInsights: "Key Insights",
+    loadPattern: "Load Pattern:",
+    lowLoadFactorSuggests: "Low load factor suggests high variability and peak usage patterns.",
+    peakDemand: "Peak Demand:",
+    peakConsumptionOccurs: "Peak consumption of {value} kWh occurs during hour {hour}:00. This represents the minimum system capacity needed.",
+    variability: "Variability:",
+    veryHighVariability: "Very high consumption variability requires robust system design.",
+    
+    // PV System Additional
+    dailyEnergyNeed: "Daily Energy Need",
+    conservativeSystem: "Conservative System",
+    costBreakdown: "Cost Breakdown",
+    systemComparison: "System Comparison",
+    technicalSpecifications: "Technical Specifications (Optimal System)",
+    calculationParameters: "Calculation Parameters",
+    engineeringRecommendations: "Engineering Recommendations",
+    pvSystemConfig: "Photovoltaic System Parameters Configuration",
     
     // PV Configuration
     pvConfigTitle: "Photovoltaic System Configuration",
@@ -427,6 +507,7 @@ export const translations = {
     
     // Consumption Analysis
     analysisTitle: "Analyse Détaillée de la Consommation",
+    detailedConsumptionAnalysis: "Analyse Détaillée de la Consommation",
     basicStats: "Statistiques de Base",
     consumptionPatterns: "Modèles de Consommation",
     peakConsumptionHours: "Heures de Consommation Maximale",
@@ -439,6 +520,45 @@ export const translations = {
     dailyAverageConsumption: "Consommation moyenne quotidienne",
     estimatedMonthlyCost: "Coût mensuel estimé",
     estimatedYearlyCost: "Coût annuel estimé",
+    
+    // Peak vs Off-Peak Analysis
+    peakVsOffPeakAnalysis: "Analyse Pointe vs Hors-Pointe",
+    peakHoursAvg: "Moy. Heures Pointe :",
+    offPeakAvg: "Moy. Hors-Pointe :",
+    peakOffPeakRatio: "Rapport Pointe/Hors-Pointe :",
+    
+    // Load Characteristics
+    loadCharacteristics: "Caractéristiques de Charge",
+    loadFactor: "Facteur de Charge :",
+    variabilityCV: "Variabilité (CV) :",
+    stdDeviation: "Écart Type :",
+    
+    // Peak Hours
+    peakHoursIdentification: "Identification des Heures de Pointe",
+    
+    // Charts - Additional
+    consumptionDistribution: "Distribution de Consommation",
+    consumptionTimeSeries: "Série Temporelle de Consommation",
+    consumptionVsHourScatter: "Graphique Consommation vs Heure",
+    
+    // Key Insights
+    keyInsights: "Informations Clés",
+    loadPattern: "Modèle de Charge :",
+    lowLoadFactorSuggests: "Un faible facteur de charge suggère une forte variabilité et des modèles d'utilisation de pointe.",
+    peakDemand: "Demande de Pointe :",
+    peakConsumptionOccurs: "La consommation de pointe de {value} kWh se produit à l'heure {hour}:00. Cela représente la capacité minimale du système nécessaire.",
+    variability: "Variabilité :",
+    veryHighVariability: "Une très forte variabilité de la consommation nécessite une conception de système robuste.",
+    
+    // PV System Additional
+    dailyEnergyNeed: "Besoin Énergétique Quotidien",
+    conservativeSystem: "Système Conservateur",
+    costBreakdown: "Répartition des Coûts",
+    systemComparison: "Comparaison des Systèmes",
+    technicalSpecifications: "Spécifications Techniques (Système Optimal)",
+    calculationParameters: "Paramètres de Calcul",
+    engineeringRecommendations: "Recommandations d'Ingénierie",
+    pvSystemConfig: "Configuration des Paramètres du Système Photovoltaïque",
     
     // PV Configuration
     pvConfigTitle: "Configuration du Système Photovoltaïque",
