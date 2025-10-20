@@ -49,14 +49,47 @@ const ConsumptionAnalysis = ({ data, analysis }) => {
 
   // Time series data for trend analysis
   const timeSeriesData = useMemo(() => {
+    // If we have more than 1000 data points (more than ~42 days of hourly data),
+    // aggregate to daily averages for better visualization
+    if (data.length > 1000) {
+      const dailyData = {};
+      
+      data.forEach(row => {
+        const dateKey = `${row.luna}-${row.zi}`;
+        if (!dailyData[dateKey]) {
+          dailyData[dateKey] = {
+            month: row.luna,
+            day: row.zi,
+            totalConsumption: 0,
+            count: 0,
+            timestamp: row.timestamp
+          };
+        }
+        dailyData[dateKey].totalConsumption += row.energie;
+        dailyData[dateKey].count += 1;
+      });
+      
+      return Object.values(dailyData).map((item, index) => ({
+        index,
+        consumption: item.totalConsumption / item.count, // Daily average
+        dailyTotal: item.totalConsumption,
+        day: item.day,
+        month: item.month,
+        timestamp: item.timestamp?.getTime() || index,
+        label: `${item.month}/${item.day}`
+      })).sort((a, b) => (a.month * 100 + a.day) - (b.month * 100 + b.day));
+    }
+    
+    // For smaller datasets, show all hourly data
     return data.map((row, index) => ({
       index,
       consumption: row.energie,
       hour: row.ora,
       day: row.zi,
       month: row.luna,
-      timestamp: row.timestamp?.getTime() || index
-    })).slice(0, 200); // Limit for performance
+      timestamp: row.timestamp?.getTime() || index,
+      label: `${row.luna}/${row.zi} ${row.ora}:00`
+    }));
   }, [data]);
 
   // Consumption ranges for distribution analysis
@@ -188,7 +221,7 @@ const ConsumptionAnalysis = ({ data, analysis }) => {
         <div className="chart-container">
           <h3>Consumption vs Hour Scatter Plot</h3>
           <ResponsiveContainer width="100%" height={400}>
-            <ScatterChart data={data.slice(0, 500)}>
+            <ScatterChart data={data.slice(0, 1000)}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis 
                 type="number"

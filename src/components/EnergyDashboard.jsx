@@ -19,6 +19,28 @@ import './EnergyDashboard.css';
 const EnergyDashboard = ({ data, analysis }) => {
   if (!data || !analysis) return null;
 
+  // Calculate data range information
+  const dataRange = React.useMemo(() => {
+    if (data.length === 0) return null;
+    
+    const dates = data.map(row => row.timestamp).filter(d => d);
+    const minDate = new Date(Math.min(...dates));
+    const maxDate = new Date(Math.max(...dates));
+    
+    const uniqueDays = new Set(data.map(row => `${row.luna}-${row.zi}`)).size;
+    const uniqueMonths = new Set(data.map(row => row.luna)).size;
+    
+    return {
+      minDate,
+      maxDate,
+      uniqueDays,
+      uniqueMonths,
+      totalReadings: data.length,
+      expectedYearlyReadings: 365 * 24, // 8760 hours in a year
+      coverage: ((data.length / (365 * 24)) * 100).toFixed(1)
+    };
+  }, [data]);
+
   // Prepare hourly consumption data
   const hourlyData = Object.entries(analysis.hourlyStats).map(([hour, stats]) => ({
     hour: `${hour}:00`,
@@ -66,6 +88,17 @@ const EnergyDashboard = ({ data, analysis }) => {
   return (
     <div className="energy-dashboard">
       <h2>📊 Energy Consumption Dashboard</h2>
+      
+      {dataRange && (
+        <div className="data-info-banner">
+          <strong>📅 Data Coverage:</strong> {dataRange.totalReadings} readings 
+          ({dataRange.uniqueDays} days, {dataRange.uniqueMonths} months) 
+          - {dataRange.coverage}% of full year
+          {dataRange.minDate && dataRange.maxDate && (
+            <> | Period: {dataRange.minDate.toLocaleDateString()} - {dataRange.maxDate.toLocaleDateString()}</>
+          )}
+        </div>
+      )}
       
       <div className="stats-cards">
         <div className="stat-card">

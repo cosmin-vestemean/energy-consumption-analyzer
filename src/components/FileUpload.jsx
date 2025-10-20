@@ -23,22 +23,43 @@ const FileUpload = ({ onDataLoaded }) => {
         // Process and validate the data
         const processedData = jsonData.map((row, index) => {
           // Handle different possible column names
-          const energie = row['energie (kwh)'] || row['energie'] || row['energy'] || 0;
-          const ora = row['ora'] || row['hour'] || 0;
-          const zi = row['zi'] || row['day'] || 1;
-          const luna = row['luna'] || row['month'] || 1;
+          const energie = row['energie (kwh)'] || row['energie'] || row['energy'];
+          const ora = row['ora'] || row['hour'];
+          const zi = row['zi'] || row['day'];
+          const luna = row['luna'] || row['month'];
+          
+          // Parse values
+          const energieValue = energie !== undefined && energie !== null ? parseFloat(energie) : null;
+          const oraValue = ora !== undefined && ora !== null ? parseInt(ora) : null;
+          const ziValue = zi !== undefined && zi !== null ? parseInt(zi) : null;
+          const lunaValue = luna !== undefined && luna !== null ? parseInt(luna) : null;
+          
+          // Skip rows with missing required fields
+          if (energieValue === null || oraValue === null || ziValue === null || lunaValue === null) {
+            return null;
+          }
+          
+          // Validate ranges
+          if (isNaN(energieValue) || energieValue < 0 || 
+              oraValue < 0 || oraValue > 23 ||
+              ziValue < 1 || ziValue > 31 ||
+              lunaValue < 1 || lunaValue > 12) {
+            return null;
+          }
           
           return {
             id: index,
-            energie: parseFloat(energie) || 0,
-            ora: parseInt(ora) || 0,
-            zi: parseInt(zi) || 1,
-            luna: parseInt(luna) || 1,
-            timestamp: new Date(2024, (parseInt(luna) || 1) - 1, parseInt(zi) || 1, parseInt(ora) || 0)
+            energie: energieValue,
+            ora: oraValue,
+            zi: ziValue,
+            luna: lunaValue,
+            timestamp: new Date(2024, lunaValue - 1, ziValue, oraValue)
           };
-        }).filter(row => row.energie > 0); // Filter out invalid data
+        }).filter(row => row !== null); // Filter out invalid/incomplete rows only
         
-        console.log('Processed data:', processedData.slice(0, 5)); // Log first 5 rows for debugging
+        console.log(`Processed ${processedData.length} rows of data`);
+        console.log('First 5 rows:', processedData.slice(0, 5));
+        console.log('Last 5 rows:', processedData.slice(-5));
         
         if (processedData.length === 0) {
           alert('No valid data found in the file. Please check the format.');

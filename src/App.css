@@ -11,6 +11,7 @@
   text-align: center;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
 }
 
 .App-header h1 {
@@ -25,6 +26,35 @@
   color: #666;
   font-size: 1.1em;
   font-weight: 400;
+}
+
+.help-button {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.help-button:hover {
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.help-button .icon {
+  font-size: 1.2em;
 }
 
 .App-main {
@@ -96,6 +126,18 @@ body {
   
   .App-header p {
     font-size: 1em;
+  }
+  
+  .help-button {
+    position: static;
+    transform: none;
+    margin: 15px auto 0;
+    font-size: 0.9em;
+    padding: 10px 20px;
+  }
+
+  .help-button:hover {
+    transform: scale(1.05);
   }
   
   .App-main {

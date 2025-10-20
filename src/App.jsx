@@ -81,11 +81,19 @@ function App() {
     };
   };
 
+  const openDocumentation = () => {
+    window.open('/docs/index.html', '_blank', 'width=1200,height=800');
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>⚡ Electric Consumption Analyzer</h1>
         <p>Analyze energy consumption data to design optimal photovoltaic systems</p>
+        <button className="help-button" onClick={openDocumentation}>
+          <span className="icon">📚</span>
+          <span>Documentation</span>
+        </button>
       </header>
       
       <main className="App-main">

@@ -12,6 +12,7 @@
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.2.0",
     "recharts": "^3.3.0",
+    "serve": "^14.2.5",
     "web-vitals": "^3.1.0",
     "xlsx": "^0.18.5"
   },
@@ -24,7 +25,8 @@
     "start": "BROWSER=none WDS_SOCKET_PORT=0 vite --port 3000",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "generate-docs": "node generate-docs.js"
   },
   "eslintConfig": {
     "extends": [
@@ -47,6 +49,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.7.0",
     "jsdom": "^26.1.0",
+    "marked": "^16.4.1",
     "vite": "^6.3.6",
     "vitest": "^3.0.7"
   }
