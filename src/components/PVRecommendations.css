@@ -1,16 +1,14 @@
 .pv-recommendations {
-  padding: 32px 20px;
+  padding: 20px;
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .pv-recommendations h2 {
-  color: #1a202c;
-  margin-bottom: 32px;
+  color: #333;
+  margin-bottom: 20px;
   text-align: center;
   font-size: 2em;
-  font-weight: 600;
-  letter-spacing: -0.5px;
 }
 
 .summary-cards {
@@ -22,32 +20,28 @@
 
 .summary-card {
   background: white;
-  border-radius: 6px;
-  padding: 24px;
+  border-radius: 12px;
+  padding: 20px;
   text-align: center;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
-  border-top: 3px solid #5a67d8;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e1e5e9;
 }
 
 .summary-card.highlight {
-  background: #5a67d8;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: white;
-  border-top: 3px solid #4c51bf;
 }
 
 .summary-card h3 {
-  margin: 0 0 12px 0;
-  font-size: 0.95em;
+  margin: 0 0 10px 0;
+  font-size: 1.1em;
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
   opacity: 0.9;
 }
 
 .big-number {
   font-size: 2.2em;
-  font-weight: 600;
+  font-weight: bold;
   margin: 10px 0;
   color: inherit;
 }
@@ -62,10 +56,9 @@
 }
 
 .system-options h3 {
-  color: #1a202c;
-  margin-bottom: 24px;
-  font-size: 1.5em;
-  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 1.6em;
   text-align: center;
 }
 
@@ -78,30 +71,28 @@
 
 .option-card {
   background: white;
-  border-radius: 6px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid transparent;
-  transition: all 0.2s ease;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
 }
 
 .option-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
 .option-card.conservative {
-  border-left-color: #48bb78;
+  border-color: #28a745;
 }
 
 .option-card.optimal {
-  border-left-color: #5a67d8;
-  background: #f7fafc;
+  border-color: #007bff;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
 .option-card.aggressive {
-  border-left-color: #f56565;
+  border-color: #dc3545;
 }
 
 .option-card h4 {
