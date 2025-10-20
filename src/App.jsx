@@ -90,7 +90,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>⚡ <strong>Electric Consumption</strong> Analyzer</h1>
+        <h1>⚡ Electric Consumption Analyzer</h1>
         <p>Analyze energy consumption data to design optimal photovoltaic systems</p>
         <button className="help-button" onClick={openDocumentation}>
           <span className="icon">📚</span>
